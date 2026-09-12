@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Career Forge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ground:#12283F;      /* blueprint navy */
+  --ground-deep:#0D1E2F; /* recessed panels */
+  --rule:#2C4C6B;        /* drafting line */
+  --line:#6FA8C7;        /* blueprint cyan */
+  --chalk:#E8F1F6;       /* primary text */
+  --chalk-dim:#9DB6C6;   /* secondary text */
+  --brass:#F2B705;       /* advancement / promotion */
+  --brass-deep:#C99204;
+  --moss:#7FB069;        /* success */
+  --rust:#E06C5A;        /* error */
+  --sp:8px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{
+  background:var(--ground);
+  color:var(--chalk);
+  font-family:Archivo,system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:15px;line-height:1.5;
+  /* faint drafting grid, the one piece of decoration that earns its place */
+  background-image:
+    linear-gradient(rgba(111,168,199,.045) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(111,168,199,.045) 1px,transparent 1px);
+  background-size:28px 28px;
+}
+button,input,textarea,select{font:inherit;color:inherit}
+a{color:var(--line)}
+
+/* ---------- shell ---------- */
+.shell{display:grid;grid-template-columns:400px 1fr;min-height:100vh}
+@media (max-width:900px){.shell{grid-template-columns:1fr}}
+
+.brief{
+  border-right:1px solid var(--rule);
+  padding:calc(var(--sp)*4);
+  display:flex;flex-direction:column;gap:calc(var(--sp)*3);
+  background:rgba(13,30,47,.5);
+}
+.stage{padding:calc(var(--sp)*4);display:flex;flex-direction:column;gap:calc(var(--sp)*3);min-width:0}
+.stage>*{max-width:880px;width:100%}
+
+/* ---------- masthead ---------- */
+.mast h1{
+  margin:0;font-size:30px;font-weight:700;letter-spacing:-.02em;line-height:1.05;
+}
+.mast p{margin:calc(var(--sp)*1) 0 0;color:var(--chalk-dim);font-size:14px;max-width:46ch}
+
+/* ---------- controls ---------- */
+label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--chalk)}
+.hint{font-size:12.5px;color:var(--chalk-dim);margin-top:6px;line-height:1.45}
+textarea,input[type=text],input[type=password],select{
+  width:100%;background:var(--ground-deep);border:1px solid var(--rule);
+  border-radius:3px;padding:10px 11px;outline:none;
+}
+textarea{min-height:96px;resize:vertical}
+textarea:focus,input:focus,select:focus{border-color:var(--line);box-shadow:0 0 0 3px rgba(111,168,199,.16)}
+input[type=range]{width:100%;accent-color:var(--brass)}
+
+.btn{
+  border:1px solid var(--rule);background:var(--ground-deep);
+  border-radius:3px;padding:10px 16px;cursor:pointer;font-weight:600;
+  transition:border-color .12s,background .12s;
+}
+.btn:hover:not(:disabled){border-color:var(--line)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+.btn-primary{background:var(--brass);color:#231A00;border-color:var(--brass-deep)}
+.btn-primary:hover:not(:disabled){background:#ffc71f}
+.row{display:flex;gap:calc(var(--sp)*1.5);flex-wrap:wrap}
+.row>.btn{flex:1;min-width:130px}
+
+details{border-top:1px solid var(--rule);padding-top:calc(var(--sp)*2)}
+summary{cursor:pointer;font-weight:600;font-size:13px;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"+ ";color:var(--line)}
+details[open] summary::before{content:"– "}
+details>div{padding-top:calc(var(--sp)*2);display:flex;flex-direction:column;gap:calc(var(--sp)*2)}
+
+.keystate{font-size:12.5px;padding:8px 10px;border-radius:3px;border:1px solid var(--rule);background:var(--ground-deep)}
+.keystate.ok{border-color:rgba(127,176,105,.5)}
+.keystate.missing{border-color:rgba(224,108,90,.5)}
+.mono{font-family:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace}
+
+/* ---------- the ladder: the hero ---------- */
+.empty{
+  border:1px dashed var(--rule);border-radius:4px;
+  padding:calc(var(--sp)*6) calc(var(--sp)*4);color:var(--chalk-dim);
+  max-width:52ch;
+}
+.empty strong{display:block;color:var(--chalk);font-size:17px;margin-bottom:8px;font-weight:600}
+
+.career-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.career-head h2{margin:0;font-size:26px;font-weight:700;letter-spacing:-.015em}
+.career-head .key{color:var(--chalk-dim);font-size:13px}
+.career-desc{margin:6px 0 0;color:var(--chalk-dim);max-width:64ch}
+
+.track{margin-top:calc(var(--sp)*3)}
+.track-head{
+  display:flex;align-items:baseline;gap:10px;
+  padding-bottom:8px;border-bottom:1px solid var(--rule);margin-bottom:calc(var(--sp)*2);
+}
+.track-head h3{margin:0;font-size:16px;font-weight:600}
+.track-head span{font-size:12.5px;color:var(--chalk-dim)}
+
+/* rungs ascend visually: pay drives bar length */
+.rung{
+  display:grid;grid-template-columns:26px 1fr 116px 78px;gap:14px;align-items:center;
+  padding:9px 0;border-bottom:1px solid rgba(44,76,107,.45);
+}
+@media (max-width:700px){
+  .rung{grid-template-columns:22px 1fr auto;gap:10px}
+  .rung-gauge{display:none}
+}
+.rung:last-child{border-bottom:none}
+.rung-n{
+  font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--chalk-dim);
+  text-align:right;
+}
+.rung-body{min-width:0}
+.rung-title{font-weight:600;font-size:14.5px}
+.rung-gauge{height:5px;background:rgba(111,168,199,.14);border-radius:0}
+.rung-bar{height:5px;background:var(--brass);min-width:2px;display:block}
+.rung-skills{margin-top:6px;display:flex;gap:6px;flex-wrap:wrap}
+.chip{
+  font-size:11.5px;padding:2px 7px;border-radius:2px;
+  border:1px solid rgba(111,168,199,.4);color:var(--line);
+  font-family:"IBM Plex Mono",monospace;
+}
+.chip.none{border-style:dashed;color:var(--chalk-dim);border-color:var(--rule)}
+.rung-pay{
+  font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--brass);
+  white-space:nowrap;font-weight:500;text-align:right;
+}
+.rung-desc{font-size:12.5px;color:var(--chalk-dim);margin-top:3px;max-width:62ch}
+
+/* ---------- activity ---------- */
+.log{
+  background:var(--ground-deep);border:1px solid var(--rule);border-radius:4px;
+  padding:calc(var(--sp)*2);max-height:260px;overflow:auto;
+  font-family:"IBM Plex Mono",monospace;font-size:12.5px;line-height:1.6;
+}
+.log div{white-space:pre-wrap;word-break:break-word}
+.log .good{color:var(--moss)}
+.log .warn{color:var(--brass)}
+.log .error{color:var(--rust)}
+.log .info{color:var(--chalk-dim)}
+
+.result{border:1px solid rgba(127,176,105,.45);border-radius:4px;padding:calc(var(--sp)*2.5);background:rgba(127,176,105,.06)}
+.result h3{margin:0 0 8px;font-size:16px;font-weight:600}
+.result p{margin:0 0 10px;color:var(--chalk-dim);font-size:13.5px}
+
+.banner{
+  border-left:3px solid var(--brass);background:rgba(242,183,5,.07);
+  padding:12px 14px;font-size:13px;color:var(--chalk-dim);border-radius:0 3px 3px 0;
+  max-width:70ch;
+}
+.banner strong{color:var(--chalk);font-weight:600}
+
+.spinner{
+  display:inline-block;width:11px;height:11px;margin-right:7px;vertical-align:-1px;
+  border:2px solid rgba(111,168,199,.3);border-top-color:var(--line);border-radius:50%;
+  animation:spin .7s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.spinner{animation:none}*{transition:none!important}}
+
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- ============ left: the brief ============ -->
+  <aside class="brief">
+    <div class="mast">
+      <h1>Career Forge</h1>
+      <p>Describe a job. A model drafts the ladder, this tool checks it and
+         packs it into a Sims 4 mod.</p>
+    </div>
+
+    <div>
+      <label for="idea">The job</label>
+      <textarea id="idea" placeholder="A ghost lawyer representing the recently deceased in property disputes"></textarea>
+      <div class="hint">Say what the job is and the tone you want. Comedy, grim,
+        mundane — the model follows your lead.</div>
+    </div>
+
+    <div class="row">
+      <button class="btn" id="shuffle">Example</button>
+      <button class="btn btn-primary" id="draft">Draft career</button>
+    </div>
+
+    <details id="model-panel">
+      <summary>Model</summary>
+      <div>
+        <div class="keystate" id="keystate">Checking for a key…</div>
+        <div>
+          <label for="apikey">OpenRouter key</label>
+          <input type="password" id="apikey" placeholder="sk-or-v1-…" autocomplete="off">
+          <div class="hint">Better: put <span class="mono">OPENROUTER_API_KEY=…</span>
+            in a <span class="mono">.env</span> file next to
+            <span class="mono">main.py</span>. Keys from <span class="mono">.env</span>
+            are never written to disk by this tool.</div>
+        </div>
+        <div>
+          <label for="model">Model</label>
+          <select id="model"></select>
+          <button class="btn" id="fetch-models" style="margin-top:8px">Load model list</button>
+        </div>
+        <div>
+          <label for="temp">Inventiveness <span class="mono" id="temp-val">0.8</span></label>
+          <input type="range" id="temp" min="0" max="1.5" step="0.05" value="0.8">
+          <div class="hint">Low sticks to plausible jobs. High gets strange.</div>
+        </div>
+        <div>
+          <label for="attempts">Retries on invalid output <span class="mono" id="attempts-val">3</span></label>
+          <input type="range" id="attempts" min="1" max="5" step="1" value="3">
+          <div class="hint">If a draft breaks the rules, the errors go back to
+            the model to fix.</div>
+        </div>
+      </div>
+    </details>
+
+    <details id="output-panel">
+      <summary>Folders</summary>
+      <div>
+        <div>
+          <label for="outdir">Build folder</label>
+          <input type="text" id="outdir">
+        </div>
+        <div>
+          <label for="modsdir">Sims 4 Mods folder</label>
+          <input type="text" id="modsdir">
+          <div class="hint">Used by "Copy to Mods folder" after a build.</div>
+        </div>
+      </div>
+    </details>
+  </aside>
+
+  <!-- ============ right: the stage ============ -->
+  <main class="stage">
+    <div id="career-area">
+      <div class="empty">
+        <strong>No career yet</strong>
+        Describe a job on the left and press Draft career. You will see the
+        full ladder here — every level, what it pays, and which skills gate
+        the promotion — before anything is written to disk.
+      </div>
+    </div>
+
+    <div id="build-area"></div>
+
+    <div>
+      <label for="log" style="margin-bottom:8px">Activity</label>
+      <div class="log" id="log" role="log" aria-live="polite">
+        <div class="info">Ready.</div>
+      </div>
+    </div>
+
+    <div class="banner">
+      <strong>About skill requirements.</strong> The model sets skill gates per
+      level and they are written into the package. Whether the game enforces
+      them depends on the tuning field names matching your patch, which this
+      tool cannot verify. Base-game careers also gate on work performance and
+      daily tasks; these do not. Read BUILD_REPORT.txt after building.
+    </div>
+  </main>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+let SPEC = null, EXAMPLES = [], exIndex = 0, POLL = null;
+
+function log(message, level = "info"){
+  const box = $("log");
+  const line = document.createElement("div");
+  line.className = level;
+  line.textContent = message;
+  box.appendChild(line);
+  box.scrollTop = box.scrollHeight;
+}
+function clearLog(){ $("log").innerHTML = ""; }
+
+function busy(on){
+  $("draft").disabled = on;
+  $("draft").innerHTML = on
+    ? '<span class="spinner"></span>Drafting…'
+    : "Draft career";
+  const build = $("build-btn");
+  if (build) build.disabled = on;
+}
+
+// ---------- rendering the ladder ----------
+function renderCareer(spec){
+  SPEC = spec;
+  const area = $("career-area");
+  const levels = spec.branches.flatMap(b => b.levels);
+  const topPay = Math.max(...levels.map(l => l.pay_per_hour), 1);
+
+  const esc = s => String(s ?? "").replace(/[&<>"]/g,
+    c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+  const tracks = spec.branches.map(branch => {
+    const origin = branch.branches_at == null
+      ? "base track"
+      : `branches from level ${branch.branches_at}`;
+
+    const rungs = [...branch.levels].sort((a,b) => a.level - b.level).map(lvl => {
+      const skills = Object.entries(lvl.required_skills || {});
+      const chips = skills.length
+        ? skills.map(([s,v]) => `<span class="chip">${esc(s)} ${v}</span>`).join("")
+        : '<span class="chip none">no skill gate</span>';
+      const width = Math.max(3, Math.round((lvl.pay_per_hour / topPay) * 100));
+      return `
+        <div class="rung">
+          <div class="rung-n">${lvl.level}</div>
+          <div class="rung-body">
+            <div class="rung-title">${esc(lvl.title)}</div>
+            ${lvl.description ? `<div class="rung-desc">${esc(lvl.description)}</div>` : ""}
+            <div class="rung-skills">${chips}</div>
+          </div>
+          <div class="rung-gauge" title="${lvl.pay_per_hour} per hour">
+            <span class="rung-bar" style="width:${width}%"></span>
+          </div>
+          <div class="rung-pay">§${lvl.pay_per_hour}/hr</div>
+        </div>`;
+    }).join("");
+
+    return `
+      <section class="track">
+        <div class="track-head">
+          <h3>${esc(branch.name)}</h3><span>${origin}</span>
+        </div>
+        ${rungs}
+      </section>`;
+  }).join("");
+
+  area.innerHTML = `
+    <div class="career-head">
+      <h2>${esc(spec.name)}</h2>
+      <span class="key mono">${esc(spec.mod_key)}</span>
+    </div>
+    <p class="career-desc">${esc(spec.description)}</p>
+    ${tracks}
+    <div class="row" style="margin-top:20px">
+      <button class="btn btn-primary" id="build-btn">Build mod</button>
+      <button class="btn" id="redraft">Draft another</button>
+    </div>`;
+
+  $("build-btn").onclick = startBuild;
+  $("redraft").onclick = () => $("draft").click();
+}
+
+function renderBuild(info){
+  $("build-area").innerHTML = `
+    <div class="result">
+      <h3>Built ${info.package}</h3>
+      <p>${info.resources} resources, ${info.strings} strings, written to
+         <span class="mono">${info.output_dir}</span></p>
+      <div class="row">
+        <button class="btn btn-primary" id="dl">Download zip</button>
+        <button class="btn" id="install">Copy to Mods folder</button>
+      </div>
+      <p style="margin:12px 0 0">In game, press Ctrl+Shift+C and run
+        <span class="mono">${info.command}</span> to check it loaded.</p>
+    </div>`;
+  $("dl").onclick = () => window.location = `/api/download/${info.mod_key}`;
+  $("install").onclick = async () => {
+    const res = await post(`/api/install/${info.mod_key}`, {mods_dir: $("modsdir").value});
+    if (res.error) return log(res.error, "error");
+    log(`Copied ${res.copied.join(", ")} to ${res.target}`, "good");
+    log("Enable script mods in Game Options > Other, delete localthumbcache.package, restart.", "info");
+  };
+}
+
+// ---------- server talk ----------
+async function post(url, body){
+  const res = await fetch(url, {
+    method:"POST", headers:{"Content-Type":"application/json"},
+    body: JSON.stringify(body || {})
+  });
+  return res.json().catch(() => ({error:"Server sent something unreadable."}));
+}
+
+function pollJob(jobId, onDone){
+  let seen = 0;
+  clearInterval(POLL);
+  POLL = setInterval(async () => {
+    const job = await (await fetch(`/api/job/${jobId}`)).json();
+    if (job.error && !job.log) { clearInterval(POLL); busy(false); return log(job.error,"error"); }
+    (job.log || []).slice(seen).forEach(l => log(l.message, l.level));
+    seen = (job.log || []).length;
+    if (job.status !== "running"){
+      clearInterval(POLL); busy(false);
+      if (job.status === "done") onDone(job);
+    }
+  }, 400);
+}
+
+async function startDraft(){
+  const idea = $("idea").value.trim();
+  if (!idea) return log("Describe a career first.", "warn");
+  clearLog(); busy(true);
+  const res = await post("/api/generate", {
+    idea, model:$("model").value,
+    temperature: parseFloat($("temp").value),
+    max_attempts: parseInt($("attempts").value, 10)
+  });
+  if (res.error){ busy(false); return log(res.error, "error"); }
+  pollJob(res.job_id, job => { if (job.spec) renderCareer(job.spec); });
+}
+
+async function startBuild(){
+  if (!SPEC) return;
+  busy(true);
+  const res = await post("/api/build", {spec:SPEC, output_dir:$("outdir").value});
+  if (res.error){ busy(false); return log(res.error, "error"); }
+  pollJob(res.job_id, job => { if (job.build) renderBuild(job.build); });
+}
+
+// ---------- settings ----------
+async function saveSettings(){
+  await post("/api/settings", {
+    model: $("model").value,
+    temperature: parseFloat($("temp").value),
+    max_attempts: parseInt($("attempts").value, 10),
+    output_dir: $("outdir").value,
+    mods_dir: $("modsdir").value,
+    api_key: $("apikey").value || undefined
+  });
+}
+
+async function init(){
+  const s = await (await fetch("/api/settings")).json();
+  EXAMPLES = s.examples || [];
+  $("model").innerHTML = (s.models || []).map(m =>
+    `<option ${m === s.model ? "selected" : ""}>${m}</option>`).join("");
+  $("temp").value = s.temperature; $("temp-val").textContent = s.temperature;
+  $("attempts").value = s.max_attempts; $("attempts-val").textContent = s.max_attempts;
+  $("outdir").value = s.output_dir;
+  $("modsdir").value = s.mods_dir;
+
+  const ks = $("keystate");
+  if (s.has_key){
+    ks.className = "keystate ok";
+    ks.textContent = `Key found — ${s.key_source}`;
+  } else {
+    ks.className = "keystate missing";
+    ks.textContent = "No key yet. Add one below or in a .env file.";
+    $("model-panel").open = true;
+  }
+}
+
+$("shuffle").onclick = () => {
+  if (!EXAMPLES.length) return;
+  $("idea").value = EXAMPLES[exIndex++ % EXAMPLES.length];
+};
+$("draft").onclick = startDraft;
+$("temp").oninput = e => $("temp-val").textContent = e.target.value;
+$("attempts").oninput = e => $("attempts-val").textContent = e.target.value;
+$("fetch-models").onclick = async () => {
+  await saveSettings();
+  log("Loading models…");
+  const res = await post("/api/models", {});
+  if (res.error) return log(res.error, "error");
+  $("model").innerHTML = res.models.map(m => `<option>${m}</option>`).join("");
+  log(`Loaded ${res.models.length} models.`, "good");
+};
+["model","outdir","modsdir","apikey","temp","attempts"].forEach(id =>
+  $(id).addEventListener("change", saveSettings));
+$("idea").addEventListener("keydown", e => {
+  if ((e.metaKey || e.ctrlKey) && e.key === "Enter") startDraft();
+});
+
+init();
+</script>
+</body>
+</html>

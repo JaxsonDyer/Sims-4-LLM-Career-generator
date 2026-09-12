@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:sims4studio.com)",
+      "WebFetch(domain:modthesims.info)",
+      "WebFetch(domain:sims4communitylibrary.readthedocs.io)",
+      "WebFetch(domain:github.com)"
+    ]
+  }
+}

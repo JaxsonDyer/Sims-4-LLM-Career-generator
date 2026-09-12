@@ -1,0 +1,329 @@
+{
+  "name": "Machine Learning Engineer",
+  "description": "Train neural networks and build AI systems that shape the future. Start as a code monkey grinding through datasets, then ascend to architect roles where algorithms bend to your will—or pivot to the dark side of corporate power.",
+  "branches": [
+    {
+      "name": "Base Track",
+      "description": "The grueling path from junior developer to elite ML architect.",
+      "branches_at": null,
+      "levels": [
+        {
+          "level": 1,
+          "title": "Data Janitor",
+          "pay_per_hour": 14,
+          "description": "You clean messy datasets and label images of cats for 12 hours a day.",
+          "required_skills": {
+            "logic": 2,
+            "programming": 3
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday"
+          ],
+          "start_hour": 9,
+          "hours_per_day": 12,
+          "promotion_message": "You've been hired as a Data Janitor. Welcome to the grind—your keyboard awaits its punishment."
+        },
+        {
+          "level": 2,
+          "title": "Junior ML Developer",
+          "pay_per_hour": 22,
+          "description": "You implement basic models while senior devs take credit for your work.",
+          "required_skills": {
+            "logic": 4,
+            "programming": 5
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday"
+          ],
+          "start_hour": 8,
+          "hours_per_day": 11,
+          "promotion_message": "You're now a Junior ML Developer. The coffee machine is your closest friend."
+        },
+        {
+          "level": 3,
+          "title": "ML Developer",
+          "pay_per_hour": 35,
+          "description": "You train neural networks and debug gradient descent failures at 2 AM.",
+          "required_skills": {
+            "logic": 6,
+            "programming": 6
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday"
+          ],
+          "start_hour": 8,
+          "hours_per_day": 10,
+          "promotion_message": "Promoted to ML Developer! Your models are finally converging—unlike your work-life balance."
+        },
+        {
+          "level": 4,
+          "title": "Senior ML Engineer",
+          "pay_per_hour": 58,
+          "description": "You architect complex pipelines and mentor juniors who remind you of your former self.",
+          "required_skills": {
+            "logic": 7,
+            "programming": 8
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday"
+          ],
+          "start_hour": 9,
+          "hours_per_day": 9,
+          "promotion_message": "You're now a Senior ML Engineer. People actually listen when you speak in meetings."
+        },
+        {
+          "level": 5,
+          "title": "ML Architect",
+          "pay_per_hour": 95,
+          "description": "You design cutting-edge systems that other companies will copy in six months.",
+          "required_skills": {
+            "charisma": 3,
+            "logic": 8,
+            "programming": 9
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday"
+          ],
+          "start_hour": 10,
+          "hours_per_day": 8,
+          "promotion_message": "Promoted to ML Architect! Your whiteboard diagrams are now considered art."
+        }
+      ]
+    },
+    {
+      "name": "Research Scientist",
+      "description": "Push the boundaries of AI research and publish papers that advance the field.",
+      "branches_at": 5,
+      "levels": [
+        {
+          "level": 6,
+          "title": "Research Scientist",
+          "pay_per_hour": 180,
+          "description": "You explore novel architectures and occasionally discover something that actually works.",
+          "required_skills": {
+            "logic": 9,
+            "programming": 9,
+            "writing": 4
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday"
+          ],
+          "start_hour": 10,
+          "hours_per_day": 7,
+          "promotion_message": "You've become a Research Scientist. Your Git commits are now cited in academic papers."
+        },
+        {
+          "level": 7,
+          "title": "Principal Research Scientist",
+          "pay_per_hour": 320,
+          "description": "You lead research teams and your name appears on breakthrough papers.",
+          "required_skills": {
+            "charisma": 4,
+            "logic": 10,
+            "programming": 10,
+            "writing": 5
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday"
+          ],
+          "start_hour": 11,
+          "hours_per_day": 6,
+          "promotion_message": "Promoted to Principal Research Scientist! Conference keynotes are now part of your routine."
+        },
+        {
+          "level": 8,
+          "title": "Distinguished Scientist",
+          "pay_per_hour": 580,
+          "description": "You set the research agenda and your ideas shape the industry's direction.",
+          "required_skills": {
+            "charisma": 5,
+            "logic": 10,
+            "programming": 10,
+            "writing": 6
+          },
+          "work_days": [
+            "tuesday",
+            "wednesday"
+          ],
+          "start_hour": 11,
+          "hours_per_day": 5,
+          "promotion_message": "You're now a Distinguished Scientist. Grad students cite your work in their dissertations."
+        },
+        {
+          "level": 9,
+          "title": "AI Research Fellow",
+          "pay_per_hour": 980,
+          "description": "You work on moonshot projects with unlimited resources and minimal oversight.",
+          "required_skills": {
+            "charisma": 6,
+            "logic": 10,
+            "programming": 10,
+            "writing": 7
+          },
+          "work_days": [
+            "wednesday"
+          ],
+          "start_hour": 12,
+          "hours_per_day": 4,
+          "promotion_message": "Promoted to AI Research Fellow! You now have the freedom to pursue any idea, no matter how ambitious."
+        },
+        {
+          "level": 10,
+          "title": "Chief AI Scientist",
+          "pay_per_hour": 1666,
+          "description": "You define the future of artificial intelligence from your ivory tower.",
+          "required_skills": {
+            "charisma": 7,
+            "logic": 10,
+            "programming": 10,
+            "writing": 8
+          },
+          "work_days": [
+            "wednesday"
+          ],
+          "start_hour": 13,
+          "hours_per_day": 3,
+          "promotion_message": "You've reached the pinnacle: Chief AI Scientist. Your theories will outlive you."
+        }
+      ]
+    },
+    {
+      "name": "Tech Overlord",
+      "description": "Abandon ethics and innovation for power, profit, and ruthless corporate domination.",
+      "branches_at": 5,
+      "levels": [
+        {
+          "level": 6,
+          "title": "VP of AI Strategy",
+          "pay_per_hour": 210,
+          "description": "You monetize AI innovations and convince investors that ethics are just suggestions.",
+          "required_skills": {
+            "charisma": 6,
+            "logic": 8,
+            "programming": 8
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday"
+          ],
+          "start_hour": 10,
+          "hours_per_day": 7,
+          "promotion_message": "You're now VP of AI Strategy. Shareholder value is your new moral compass."
+        },
+        {
+          "level": 7,
+          "title": "Chief Technology Officer",
+          "pay_per_hour": 390,
+          "description": "You gut R&D budgets while presenting vaporware demos to gullible board members.",
+          "required_skills": {
+            "charisma": 7,
+            "logic": 9,
+            "mischief": 3,
+            "programming": 9
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday"
+          ],
+          "start_hour": 11,
+          "hours_per_day": 6,
+          "promotion_message": "Promoted to CTO! Your PowerPoints are more impressive than your actual technology."
+        },
+        {
+          "level": 8,
+          "title": "Chief Operating Officer",
+          "pay_per_hour": 720,
+          "description": "You optimize profits by firing engineers and replacing them with cheaper algorithms.",
+          "required_skills": {
+            "charisma": 8,
+            "logic": 9,
+            "mischief": 5,
+            "programming": 9
+          },
+          "work_days": [
+            "tuesday",
+            "thursday"
+          ],
+          "start_hour": 11,
+          "hours_per_day": 5,
+          "promotion_message": "You're now COO. Layoff announcements and stock buybacks are your specialty."
+        },
+        {
+          "level": 9,
+          "title": "Chief Executive Officer",
+          "pay_per_hour": 2777,
+          "description": "You rule the company with an iron fist, crushing competitors and exploiting users' data for maximum profit.",
+          "required_skills": {
+            "charisma": 9,
+            "logic": 10,
+            "mischief": 7,
+            "programming": 10
+          },
+          "work_days": [
+            "monday",
+            "wednesday",
+            "friday"
+          ],
+          "start_hour": 12,
+          "hours_per_day": 6,
+          "promotion_message": "You've become CEO. Your empire is built on surveillance capitalism and questionable ethics."
+        },
+        {
+          "level": 10,
+          "title": "Tech Monopolist",
+          "pay_per_hour": 4166,
+          "description": "You've transcended mere CEO status to become an untouchable titan who shapes global policy.",
+          "required_skills": {
+            "charisma": 10,
+            "logic": 10,
+            "mischief": 8,
+            "programming": 10
+          },
+          "work_days": [
+            "tuesday",
+            "thursday",
+            "friday"
+          ],
+          "start_hour": 13,
+          "hours_per_day": 4,
+          "promotion_message": "You've achieved ultimate power as a Tech Monopolist. Governments consult you, regulators fear you, and your wealth is incalculable."
+        }
+      ]
+    }
+  ],
+  "author": "CareerForge",
+  "mod_key": "ml_engineer_career",
+  "icon_hint": "neural network with glowing nodes",
+  "company_name": ""
+}

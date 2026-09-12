@@ -1,0 +1,289 @@
+{
+  "name": "Machine Learning Engineer",
+  "description": "Train the machines that will one day replace everyone, starting with a soul-crushing grind of data scrubbing and dawn shifts. Survive it, and choose between revered scientist and the most feared executive in the sim world.",
+  "branches": [
+    {
+      "name": "Engineer Track",
+      "description": "The grind: seven-day weeks, pre-dawn starts, and pay that insults your intelligence, all for the chance to touch the models themselves.",
+      "branches_at": null,
+      "levels": [
+        {
+          "level": 1,
+          "title": "Data Janitor",
+          "pay_per_hour": 14,
+          "description": "Scrub duplicate cat photos out of training data for pocket change.",
+          "required_skills": {
+            "logic": 4,
+            "programming": 4
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday",
+            "sunday"
+          ],
+          "start_hour": 8,
+          "hours_per_day": 12,
+          "promotion_message": "You're in. Barely. You'll spend your days scrubbing duplicate cat photos from training sets for less than a barista makes. Welcome to the grind."
+        },
+        {
+          "level": 2,
+          "title": "Label Monkey",
+          "pay_per_hour": 18,
+          "description": "Label images at dawn, seven days a week, and pretend it builds character.",
+          "required_skills": {
+            "logic": 5,
+            "programming": 5
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday",
+            "sunday"
+          ],
+          "start_hour": 7,
+          "hours_per_day": 12,
+          "promotion_message": "Somehow you impressed someone. Now you label images at 7 AM, seven days a week. The word 'junior' has never felt more accurate."
+        },
+        {
+          "level": 3,
+          "title": "Junior ML Engineer",
+          "pay_per_hour": 23,
+          "description": "Write real code that breaks in ways nobody can reproduce.",
+          "required_skills": {
+            "logic": 6,
+            "programming": 6
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday",
+            "sunday"
+          ],
+          "start_hour": 6,
+          "hours_per_day": 12,
+          "promotion_message": "You're a real engineer now, which means the bugs are your fault and the on-call pager is your pillow. Congratulations?"
+        },
+        {
+          "level": 4,
+          "title": "Hyperparameter Herder",
+          "pay_per_hour": 30,
+          "description": "Tune hyperparameters before sunrise and take the blame when the model hallucinates.",
+          "required_skills": {
+            "logic": 6,
+            "programming": 7
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday"
+          ],
+          "start_hour": 6,
+          "hours_per_day": 12,
+          "promotion_message": "The company noticed your models stop exploding when you touch them. You now herd hyperparameters before dawn, six days a week."
+        },
+        {
+          "level": 5,
+          "title": "ML Engineer",
+          "pay_per_hour": 38,
+          "description": "Ship models that mostly work and attend standups that mostly never end.",
+          "required_skills": {
+            "logic": 7,
+            "programming": 7
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday"
+          ],
+          "start_hour": 7,
+          "hours_per_day": 11,
+          "promotion_message": "A real title, a real desk, and a coffee machine that mostly works. The grind continues, but the numbers next to your name are climbing."
+        },
+        {
+          "level": 6,
+          "title": "Senior Model Wrangler",
+          "pay_per_hour": 48,
+          "description": "Wrangle junior engineers and the legacy model nobody dares retrain.",
+          "required_skills": {
+            "logic": 8,
+            "programming": 8
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday"
+          ],
+          "start_hour": 8,
+          "hours_per_day": 11,
+          "promotion_message": "You've been promoted to Senior Model Wrangler. Junior engineers now scrub the cat photos, and you get to tell them it builds character."
+        },
+        {
+          "level": 7,
+          "title": "Lead Pipeline Engineer",
+          "pay_per_hour": 60,
+          "description": "Own the whole pipeline, the pager, and the ten-hour days that never quite end.",
+          "required_skills": {
+            "logic": 9,
+            "programming": 9
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday"
+          ],
+          "start_hour": 9,
+          "hours_per_day": 10,
+          "promotion_message": "You run the pipeline end to end now. HR calls the ten-hour days 'a lifestyle choice.' One more push and you can pick your path: research, or the dark side."
+        }
+      ]
+    },
+    {
+      "name": "Research Track",
+      "description": "Stay hands-on with the models, publish leaderboard-breaking research, and trade the grind for a one-day work week.",
+      "branches_at": 7,
+      "levels": [
+        {
+          "level": 8,
+          "title": "Staff Research Engineer",
+          "pay_per_hour": 150,
+          "description": "Do actual science on the models themselves, four glorious days a week.",
+          "required_skills": {
+            "logic": 10,
+            "programming": 9
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday"
+          ],
+          "start_hour": 10,
+          "hours_per_day": 9,
+          "promotion_message": "You chose science over spreadsheets. As a Staff Research Engineer, you touch the models themselves — and only four days a week. Blasphemy."
+        },
+        {
+          "level": 9,
+          "title": "Principal Scientist",
+          "pay_per_hour": 4000,
+          "description": "Publish world-breaking research and bill a fortune for two days of it.",
+          "required_skills": {
+            "logic": 10,
+            "programming": 10
+          },
+          "work_days": [
+            "wednesday",
+            "friday"
+          ],
+          "start_hour": 11,
+          "hours_per_day": 10,
+          "promotion_message": "Your paper broke the leaderboard, and the company broke the bank to keep you. Two days a week, a staggering rate, and a standing nap invitation."
+        },
+        {
+          "level": 10,
+          "title": "AI Oracle",
+          "pay_per_hour": 10000,
+          "description": "Your oracle models run the world while you work Fridays and collect a small fortune per day.",
+          "required_skills": {
+            "logic": 10,
+            "programming": 10,
+            "wellness": 4
+          },
+          "work_days": [
+            "friday"
+          ],
+          "start_hour": 11,
+          "hours_per_day": 12,
+          "promotion_message": "Your models now predict everything except when you'll come into the office, because the answer is: Fridays only. Six figures a day, and the rest of the week is yours."
+        }
+      ]
+    },
+    {
+      "name": "Dark Executive Track",
+      "description": "Take the models commercial. Manipulate, monetize, and climb to a throne built from other sims' data — with a work week that shrinks as your power grows.",
+      "branches_at": 7,
+      "levels": [
+        {
+          "level": 8,
+          "title": "Director of Dark Patterns",
+          "pay_per_hour": 160,
+          "description": "Design interfaces sims can't stop tapping, four days a week.",
+          "required_skills": {
+            "charisma": 6,
+            "logic": 10,
+            "programming": 9
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday"
+          ],
+          "start_hour": 10,
+          "hours_per_day": 9,
+          "promotion_message": "You chose the dark side, and the dark side has a signing bonus. As Director of Dark Patterns, you make sims spend money they don't have on things they don't need."
+        },
+        {
+          "level": 9,
+          "title": "Chief Exploitation Officer",
+          "pay_per_hour": 5000,
+          "description": "Monetize everything, including the guilt, two days a week.",
+          "required_skills": {
+            "charisma": 8,
+            "logic": 10,
+            "mischief": 6
+          },
+          "work_days": [
+            "tuesday",
+            "thursday"
+          ],
+          "start_hour": 10,
+          "hours_per_day": 10,
+          "promotion_message": "The board loves your plan to charge subscriptions for feelings. Two days a week, five grand an hour, and a conscience you've agreed to leave in the parking garage."
+        },
+        {
+          "level": 10,
+          "title": "CEO, Evil Overlord",
+          "pay_per_hour": 10000,
+          "description": "Rule OmniMind from a corner office, working three days a week for a fortune per day while everyone else grinds.",
+          "required_skills": {
+            "charisma": 10,
+            "logic": 10,
+            "mischief": 8
+          },
+          "work_days": [
+            "tuesday",
+            "wednesday",
+            "thursday"
+          ],
+          "start_hour": 10,
+          "hours_per_day": 12,
+          "promotion_message": "You did it. You're the CEO, the Evil Overlord, the reason the machines know everyone's secrets. Three days a week, six figures a day, and the rest of the week is yours to spend plotting. Remember the grind that got you here? Neither do your employees. That's the point."
+        }
+      ]
+    }
+  ],
+  "author": "CareerForge",
+  "mod_key": "machine_learning_engineer",
+  "icon_hint": "a stylized brain made of circuit nodes",
+  "company_name": "OmniMind Industries"
+}

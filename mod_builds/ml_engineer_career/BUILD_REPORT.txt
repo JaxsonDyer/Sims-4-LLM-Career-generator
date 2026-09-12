@@ -1,0 +1,82 @@
+======================================================================
+  Machine Learning Engineer
+  built by Sims 4 Career Forge - 2026-09-12T01:53:13+00:00
+======================================================================
+
+Train neural networks and build AI systems that shape the future. Start as a code monkey grinding through datasets, then ascend to architect roles where algorithms bend to your will—or pivot to the dark side of corporate power.
+
+----------------------------------------------------------------------
+CAREER STRUCTURE
+----------------------------------------------------------------------
+
+Base Track  (base track)
+   1. Data Janitor                       $   14/hr  6d  skills: logic 2, programming 3
+   2. Junior ML Developer                $   22/hr  6d  skills: logic 4, programming 5
+   3. ML Developer                       $   35/hr  6d  skills: logic 6, programming 6
+   4. Senior ML Engineer                 $   58/hr  5d  skills: logic 7, programming 8
+   5. ML Architect                       $   95/hr  5d  skills: charisma 3, logic 8, programming 9
+
+Research Scientist  (branches from level 5)
+   6. Research Scientist                 $  180/hr  4d  skills: logic 9, programming 9, writing 4
+   7. Principal Research Scientist       $  320/hr  3d  skills: charisma 4, logic 10, programming 10, writing 5
+   8. Distinguished Scientist            $  580/hr  2d  skills: charisma 5, logic 10, programming 10, writing 6
+   9. AI Research Fellow                 $  980/hr  1d  skills: charisma 6, logic 10, programming 10, writing 7
+  10. Chief AI Scientist                 $ 1666/hr  1d  skills: charisma 7, logic 10, programming 10, writing 8
+
+Tech Overlord  (branches from level 5)
+   6. VP of AI Strategy                  $  210/hr  4d  skills: charisma 6, logic 8, programming 8
+   7. Chief Technology Officer           $  390/hr  3d  skills: charisma 7, logic 9, mischief 3, programming 9
+   8. Chief Operating Officer            $  720/hr  2d  skills: charisma 8, logic 9, mischief 5, programming 9
+   9. Chief Executive Officer            $ 2777/hr  3d  skills: charisma 9, logic 10, mischief 7, programming 10
+  10. Tech Monopolist                    $ 4166/hr  3d  skills: charisma 10, logic 10, mischief 8, programming 10
+
+----------------------------------------------------------------------
+FILES
+----------------------------------------------------------------------
+ml_engineer_career.package        71 resources, 40 strings
+ml_engineer_career.ts4script      diagnostic console command
+ml_engineer_career.spec.json      edit and rebuild to tweak
+ml_engineer_career.manifest.json  every resource id, for conflict checks
+
+----------------------------------------------------------------------
+INSTALL
+----------------------------------------------------------------------
+1. Copy the .package AND the .ts4script into your Mods folder:
+     Windows  Documents\Electronic Arts\The Sims 4\Mods
+     macOS    ~/Documents/Electronic Arts/The Sims 4/Mods
+   They can sit in a subfolder, but no deeper than one level down.
+
+2. In game: Game Options > Other > enable BOTH
+     'Enable Custom Content and Mods'
+     'Script Mods Allowed'
+   Then restart the game fully. Script mods only load at startup.
+
+3. Delete localthumbcache.package from the The Sims 4 folder. Stale
+   cache is the single most common reason a new mod does not appear.
+
+----------------------------------------------------------------------
+VERIFYING IT WORKED
+----------------------------------------------------------------------
+Open the console with Ctrl+Shift+C and run:
+     forge.ml_engineer_career
+
+  Command responds     -> script loaded. If the career is still
+                          missing, the .package tuning did not
+                          resolve; see TROUBLESHOOTING below.
+  Unknown command      -> the .ts4script is not loading. Check that
+                          script mods are enabled and the file is
+                          not nested too deep.
+
+Then have an adult sim use a phone or computer > Find a Job.
+The career appears as 'Machine Learning Engineer'.
+
+----------------------------------------------------------------------
+TROUBLESHOOTING
+----------------------------------------------------------------------
+The tuning and SimData follow EA's own careers as of game version
+1.127.41.1030, and only reference base-game content. A
+later patch can still rename fields. If the career misbehaves,
+check the game's exception log, which names the tuning file and
+field at fault:
+  Documents/Electronic Arts/The Sims 4/lastException*.txt
+

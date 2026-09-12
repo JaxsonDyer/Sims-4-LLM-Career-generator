@@ -1,0 +1,417 @@
+{
+  "career": "Machine Learning Engineer",
+  "mod_key": "ml_engineer_career",
+  "build_id": "20260912-beb69c75",
+  "generated_utc": "2026-09-12T01:53:13+00:00",
+  "branches": [
+    {
+      "name": "Base Track",
+      "branches_at": null,
+      "levels": 5
+    },
+    {
+      "name": "Research Scientist",
+      "branches_at": 5,
+      "levels": 5
+    },
+    {
+      "name": "Tech Overlord",
+      "branches_at": 5,
+      "levels": 5
+    }
+  ],
+  "resources": [
+    {
+      "key": "339BC5BD!00000000!99A01D950FA9434F",
+      "type": "0x339BC5BD",
+      "bytes": 338
+    },
+    {
+      "key": "545AC67A!009BC58E!99A01D950FA9434F",
+      "type": "0x545AC67A",
+      "bytes": 249
+    },
+    {
+      "key": "28B64675!00000000!82F4337167B7F2A5",
+      "type": "0x28B64675",
+      "bytes": 252
+    },
+    {
+      "key": "545AC67A!00B6465D!82F4337167B7F2A5",
+      "type": "0x545AC67A",
+      "bytes": 243
+    },
+    {
+      "key": "2C70ADF8!00000000!DD8ABE65742F4A3A",
+      "type": "0x2C70ADF8",
+      "bytes": 2095
+    },
+    {
+      "key": "545AC67A!0070ADD4!DD8ABE65742F4A3A",
+      "type": "0x545AC67A",
+      "bytes": 1511
+    },
+    {
+      "key": "28B64675!00000000!82F4337167B7F2A6",
+      "type": "0x28B64675",
+      "bytes": 252
+    },
+    {
+      "key": "545AC67A!00B6465D!82F4337167B7F2A6",
+      "type": "0x545AC67A",
+      "bytes": 243
+    },
+    {
+      "key": "2C70ADF8!00000000!DD8ABE65742F4A39",
+      "type": "0x2C70ADF8",
+      "bytes": 2098
+    },
+    {
+      "key": "545AC67A!0070ADD4!DD8ABE65742F4A39",
+      "type": "0x545AC67A",
+      "bytes": 1511
+    },
+    {
+      "key": "28B64675!00000000!82F4337167B7F2A7",
+      "type": "0x28B64675",
+      "bytes": 252
+    },
+    {
+      "key": "545AC67A!00B6465D!82F4337167B7F2A7",
+      "type": "0x545AC67A",
+      "bytes": 243
+    },
+    {
+      "key": "2C70ADF8!00000000!DD8ABE65742F4A38",
+      "type": "0x2C70ADF8",
+      "bytes": 2097
+    },
+    {
+      "key": "545AC67A!0070ADD4!DD8ABE65742F4A38",
+      "type": "0x545AC67A",
+      "bytes": 1511
+    },
+    {
+      "key": "28B64675!00000000!82F4337167B7F2A0",
+      "type": "0x28B64675",
+      "bytes": 253
+    },
+    {
+      "key": "545AC67A!00B6465D!82F4337167B7F2A0",
+      "type": "0x545AC67A",
+      "bytes": 243
+    },
+    {
+      "key": "2C70ADF8!00000000!DD8ABE65742F4A3F",
+      "type": "0x2C70ADF8",
+      "bytes": 2098
+    },
+    {
+      "key": "545AC67A!0070ADD4!DD8ABE65742F4A3F",
+      "type": "0x545AC67A",
+      "bytes": 1511
+    },
+    {
+      "key": "28B64675!00000000!82F4337167B7F2A1",
+      "type": "0x28B64675",
+      "bytes": 269
+    },
+    {
+      "key": "545AC67A!00B6465D!82F4337167B7F2A1",
+      "type": "0x545AC67A",
+      "bytes": 259
+    },
+    {
+      "key": "2C70ADF8!00000000!DD8ABE65742F4A3E",
+      "type": "0x2C70ADF8",
+      "bytes": 2097
+    },
+    {
+      "key": "545AC67A!0070ADD4!DD8ABE65742F4A3E",
+      "type": "0x545AC67A",
+      "bytes": 1511
+    },
+    {
+      "key": "48C75CE3!00000000!D32D5A87E710F07B",
+      "type": "0x48C75CE3",
+      "bytes": 1119
+    },
+    {
+      "key": "545AC67A!00C75CAB!D32D5A87E710F07B",
+      "type": "0x545AC67A",
+      "bytes": 706
+    },
+    {
+      "key": "28B64675!00000000!C5C59B89990F1C69",
+      "type": "0x28B64675",
+      "bytes": 279
+    },
+    {
+      "key": "545AC67A!00B6465D!C5C59B89990F1C69",
+      "type": "0x545AC67A",
+      "bytes": 267
+    },
+    {
+      "key": "2C70ADF8!00000000!80148950A286060A",
+      "type": "0x2C70ADF8",
+      "bytes": 2109
+    },
+    {
+      "key": "545AC67A!0070ADD4!80148950A286060A",
+      "type": "0x545AC67A",
+      "bytes": 1519
+    },
+    {
+      "key": "28B64675!00000000!C5C59B89990F1C68",
+      "type": "0x28B64675",
+      "bytes": 295
+    },
+    {
+      "key": "545AC67A!00B6465D!C5C59B89990F1C68",
+      "type": "0x545AC67A",
+      "bytes": 267
+    },
+    {
+      "key": "2C70ADF8!00000000!80148950A286060B",
+      "type": "0x2C70ADF8",
+      "bytes": 2110
+    },
+    {
+      "key": "545AC67A!0070ADD4!80148950A286060B",
+      "type": "0x545AC67A",
+      "bytes": 1519
+    },
+    {
+      "key": "28B64675!00000000!C5C59B89990F1C67",
+      "type": "0x28B64675",
+      "bytes": 296
+    },
+    {
+      "key": "545AC67A!00B6465D!C5C59B89990F1C67",
+      "type": "0x545AC67A",
+      "bytes": 267
+    },
+    {
+      "key": "2C70ADF8!00000000!80148950A2860604",
+      "type": "0x2C70ADF8",
+      "bytes": 2107
+    },
+    {
+      "key": "545AC67A!0070ADD4!80148950A2860604",
+      "type": "0x545AC67A",
+      "bytes": 1519
+    },
+    {
+      "key": "28B64675!00000000!C5C59B89990F1C66",
+      "type": "0x28B64675",
+      "bytes": 295
+    },
+    {
+      "key": "545AC67A!00B6465D!C5C59B89990F1C66",
+      "type": "0x545AC67A",
+      "bytes": 267
+    },
+    {
+      "key": "2C70ADF8!00000000!80148950A2860605",
+      "type": "0x2C70ADF8",
+      "bytes": 2112
+    },
+    {
+      "key": "545AC67A!0070ADD4!80148950A2860605",
+      "type": "0x545AC67A",
+      "bytes": 1519
+    },
+    {
+      "key": "28B64675!00000000!9DE3B8CF14AD4EDA",
+      "type": "0x28B64675",
+      "bytes": 296
+    },
+    {
+      "key": "545AC67A!00B6465D!9DE3B8CF14AD4EDA",
+      "type": "0x545AC67A",
+      "bytes": 268
+    },
+    {
+      "key": "2C70ADF8!00000000!A8EB610429BC4827",
+      "type": "0x2C70ADF8",
+      "bytes": 2115
+    },
+    {
+      "key": "545AC67A!0070ADD4!A8EB610429BC4827",
+      "type": "0x545AC67A",
+      "bytes": 1520
+    },
+    {
+      "key": "48C75CE3!00000000!DBB13A05D593CDDC",
+      "type": "0x48C75CE3",
+      "bytes": 1033
+    },
+    {
+      "key": "545AC67A!00C75CAB!DBB13A05D593CDDC",
+      "type": "0x545AC67A",
+      "bytes": 698
+    },
+    {
+      "key": "28B64675!00000000!8157DBCF32BD4FD1",
+      "type": "0x28B64675",
+      "bytes": 272
+    },
+    {
+      "key": "545AC67A!00B6465D!8157DBCF32BD4FD1",
+      "type": "0x545AC67A",
+      "bytes": 262
+    },
+    {
+      "key": "2C70ADF8!00000000!EC558023216C81DC",
+      "type": "0x2C70ADF8",
+      "bytes": 2104
+    },
+    {
+      "key": "545AC67A!0070ADD4!EC558023216C81DC",
+      "type": "0x545AC67A",
+      "bytes": 1514
+    },
+    {
+      "key": "28B64675!00000000!8157DBCF32BD4FD0",
+      "type": "0x28B64675",
+      "bytes": 290
+    },
+    {
+      "key": "545AC67A!00B6465D!8157DBCF32BD4FD0",
+      "type": "0x545AC67A",
+      "bytes": 262
+    },
+    {
+      "key": "2C70ADF8!00000000!EC558023216C81DD",
+      "type": "0x2C70ADF8",
+      "bytes": 2105
+    },
+    {
+      "key": "545AC67A!0070ADD4!EC558023216C81DD",
+      "type": "0x545AC67A",
+      "bytes": 1514
+    },
+    {
+      "key": "28B64675!00000000!8157DBCF32BD4FDF",
+      "type": "0x28B64675",
+      "bytes": 290
+    },
+    {
+      "key": "545AC67A!00B6465D!8157DBCF32BD4FDF",
+      "type": "0x545AC67A",
+      "bytes": 262
+    },
+    {
+      "key": "2C70ADF8!00000000!EC558023216C81D2",
+      "type": "0x2C70ADF8",
+      "bytes": 2102
+    },
+    {
+      "key": "545AC67A!0070ADD4!EC558023216C81D2",
+      "type": "0x545AC67A",
+      "bytes": 1514
+    },
+    {
+      "key": "28B64675!00000000!8157DBCF32BD4FDE",
+      "type": "0x28B64675",
+      "bytes": 290
+    },
+    {
+      "key": "545AC67A!00B6465D!8157DBCF32BD4FDE",
+      "type": "0x545AC67A",
+      "bytes": 262
+    },
+    {
+      "key": "2C70ADF8!00000000!EC558023216C81D3",
+      "type": "0x2C70ADF8",
+      "bytes": 2106
+    },
+    {
+      "key": "545AC67A!0070ADD4!EC558023216C81D3",
+      "type": "0x545AC67A",
+      "bytes": 1514
+    },
+    {
+      "key": "28B64675!00000000!859A571337AEA892",
+      "type": "0x28B64675",
+      "bytes": 290
+    },
+    {
+      "key": "545AC67A!00B6465D!859A571337AEA892",
+      "type": "0x545AC67A",
+      "bytes": 263
+    },
+    {
+      "key": "2C70ADF8!00000000!81CA96B1CB60A711",
+      "type": "0x2C70ADF8",
+      "bytes": 2106
+    },
+    {
+      "key": "545AC67A!0070ADD4!81CA96B1CB60A711",
+      "type": "0x545AC67A",
+      "bytes": 1515
+    },
+    {
+      "key": "48C75CE3!00000000!B20766EAC4D2B2C0",
+      "type": "0x48C75CE3",
+      "bytes": 1031
+    },
+    {
+      "key": "545AC67A!00C75CAB!B20766EAC4D2B2C0",
+      "type": "0x545AC67A",
+      "bytes": 693
+    },
+    {
+      "key": "73996BEB!00000000!D78E852B9A77D901",
+      "type": "0x73996BEB",
+      "bytes": 15493
+    },
+    {
+      "key": "545AC67A!00996B98!D78E852B9A77D901",
+      "type": "0x545AC67A",
+      "bytes": 654
+    },
+    {
+      "key": "220557DA!00000000!0023416F07B78148",
+      "type": "0x220557DA",
+      "bytes": 2304
+    }
+  ],
+  "tuning_names": {
+    "ml_engineer_career:performance": "0x99A01D950FA9434F",
+    "ml_engineer_career:aspiration_base_track_1": "0x82F4337167B7F2A5",
+    "ml_engineer_career:career_level_base_track_1": "0xDD8ABE65742F4A3A",
+    "ml_engineer_career:aspiration_base_track_2": "0x82F4337167B7F2A6",
+    "ml_engineer_career:career_level_base_track_2": "0xDD8ABE65742F4A39",
+    "ml_engineer_career:aspiration_base_track_3": "0x82F4337167B7F2A7",
+    "ml_engineer_career:career_level_base_track_3": "0xDD8ABE65742F4A38",
+    "ml_engineer_career:aspiration_base_track_4": "0x82F4337167B7F2A0",
+    "ml_engineer_career:career_level_base_track_4": "0xDD8ABE65742F4A3F",
+    "ml_engineer_career:aspiration_base_track_5": "0x82F4337167B7F2A1",
+    "ml_engineer_career:career_level_base_track_5": "0xDD8ABE65742F4A3E",
+    "ml_engineer_career:career_track_research_scientist": "0xDBB13A05D593CDDC",
+    "ml_engineer_career:career_track_tech_overlord": "0xB20766EAC4D2B2C0",
+    "ml_engineer_career:career_track_base_track": "0xD32D5A87E710F07B",
+    "ml_engineer_career:aspiration_research_scientist_6": "0xC5C59B89990F1C69",
+    "ml_engineer_career:career_level_research_scientist_6": "0x80148950A286060A",
+    "ml_engineer_career:aspiration_research_scientist_7": "0xC5C59B89990F1C68",
+    "ml_engineer_career:career_level_research_scientist_7": "0x80148950A286060B",
+    "ml_engineer_career:aspiration_research_scientist_8": "0xC5C59B89990F1C67",
+    "ml_engineer_career:career_level_research_scientist_8": "0x80148950A2860604",
+    "ml_engineer_career:aspiration_research_scientist_9": "0xC5C59B89990F1C66",
+    "ml_engineer_career:career_level_research_scientist_9": "0x80148950A2860605",
+    "ml_engineer_career:aspiration_research_scientist_10": "0x9DE3B8CF14AD4EDA",
+    "ml_engineer_career:career_level_research_scientist_10": "0xA8EB610429BC4827",
+    "ml_engineer_career:aspiration_tech_overlord_6": "0x8157DBCF32BD4FD1",
+    "ml_engineer_career:career_level_tech_overlord_6": "0xEC558023216C81DC",
+    "ml_engineer_career:aspiration_tech_overlord_7": "0x8157DBCF32BD4FD0",
+    "ml_engineer_career:career_level_tech_overlord_7": "0xEC558023216C81DD",
+    "ml_engineer_career:aspiration_tech_overlord_8": "0x8157DBCF32BD4FDF",
+    "ml_engineer_career:career_level_tech_overlord_8": "0xEC558023216C81D2",
+    "ml_engineer_career:aspiration_tech_overlord_9": "0x8157DBCF32BD4FDE",
+    "ml_engineer_career:career_level_tech_overlord_9": "0xEC558023216C81D3",
+    "ml_engineer_career:aspiration_tech_overlord_10": "0x859A571337AEA892",
+    "ml_engineer_career:career_level_tech_overlord_10": "0x81CA96B1CB60A711",
+    "ml_engineer_career:career": "0xD78E852B9A77D901"
+  }
+}

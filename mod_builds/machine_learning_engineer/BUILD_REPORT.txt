@@ -1,0 +1,85 @@
+======================================================================
+  Machine Learning Engineer
+  built by Sims 4 Career Forge - 2026-09-12T02:02:36+00:00
+======================================================================
+
+Train the machines that will one day replace everyone, starting with a soul-crushing grind of data scrubbing and dawn shifts. Survive it, and choose between revered scientist and the most feared executive in the sim world.
+
+----------------------------------------------------------------------
+CAREER STRUCTURE
+----------------------------------------------------------------------
+
+Engineer Track  (base track)
+   1. Data Janitor                       $   14/hr  7d  skills: logic 4, programming 4
+   2. Label Monkey                       $   18/hr  7d  skills: logic 5, programming 5
+   3. Junior ML Engineer                 $   23/hr  7d  skills: logic 6, programming 6
+   4. Hyperparameter Herder              $   30/hr  6d  skills: logic 6, programming 7
+   5. ML Engineer                        $   38/hr  6d  skills: logic 7, programming 7
+   6. Senior Model Wrangler              $   48/hr  5d  skills: logic 8, programming 8
+   7. Lead Pipeline Engineer             $   60/hr  5d  skills: logic 9, programming 9
+
+Research Track  (branches from level 7)
+   8. Staff Research Engineer            $  150/hr  4d  skills: logic 10, programming 9
+   9. Principal Scientist                $ 4000/hr  2d  skills: logic 10, programming 10
+  10. AI Oracle                          $10000/hr  1d  skills: logic 10, programming 10, wellness 4
+
+Dark Executive Track  (branches from level 7)
+   8. Director of Dark Patterns          $  160/hr  4d  skills: charisma 6, logic 10, programming 9
+   9. Chief Exploitation Officer         $ 5000/hr  2d  skills: charisma 8, logic 10, mischief 6
+  10. CEO, Evil Overlord                 $10000/hr  3d  skills: charisma 10, logic 10, mischief 8
+
+----------------------------------------------------------------------
+FILES
+----------------------------------------------------------------------
+machine_learning_engineer.package        63 resources, 36 strings
+machine_learning_engineer.ts4script      diagnostic console command
+machine_learning_engineer.spec.json      edit and rebuild to tweak
+machine_learning_engineer.manifest.json  every resource id, for conflict checks
+
+----------------------------------------------------------------------
+INSTALL
+----------------------------------------------------------------------
+1. Copy the .package AND the .ts4script into your Mods folder:
+     Windows  Documents\Electronic Arts\The Sims 4\Mods
+     macOS    ~/Documents/Electronic Arts/The Sims 4/Mods
+   They can sit in a subfolder, but no deeper than one level down.
+
+2. In game: Game Options > Other > enable BOTH
+     'Enable Custom Content and Mods'
+     'Script Mods Allowed'
+   Then restart the game fully. Script mods only load at startup.
+
+3. Delete localthumbcache.package from the The Sims 4 folder. Stale
+   cache is the single most common reason a new mod does not appear.
+
+----------------------------------------------------------------------
+VERIFYING IT WORKED
+----------------------------------------------------------------------
+Open the console with Ctrl+Shift+C and run:
+     forge.machine_learning_engineer
+
+  Command responds     -> script loaded. If the career is still
+                          missing, the .package tuning did not
+                          resolve; see TROUBLESHOOTING below.
+  Unknown command      -> the .ts4script is not loading. Check that
+                          script mods are enabled and the file is
+                          not nested too deep.
+
+Then have an adult sim use a phone or computer > Find a Job.
+The career appears as 'Machine Learning Engineer'.
+
+----------------------------------------------------------------------
+TROUBLESHOOTING
+----------------------------------------------------------------------
+The tuning and SimData follow EA's own careers as of game version
+1.127.41.1030, and only reference base-game content. A
+later patch can still rename fields. If the career misbehaves,
+check the game's exception log, which names the tuning file and
+field at fault:
+  Documents/Electronic Arts/The Sims 4/lastException*.txt
+
+----------------------------------------------------------------------
+NOTES
+----------------------------------------------------------------------
+  - Research Track level 10 (AI Oracle): wellness 4 is not enforced; the base game has no wellness objective at or below level 4.
+
