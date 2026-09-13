@@ -1,0 +1,99 @@
+======================================================================
+  Machine Learning Engineer
+  built by Sims 4 Career Forge - 2026-09-13T23:43:52+00:00
+======================================================================
+
+Claw your way from underpaid code-monkey to a six-figure-a-day tech deity, then choose whether to remain a brilliant recluse or seize the corner office and everyone's soul along with it.
+
+----------------------------------------------------------------------
+CAREER STRUCTURE
+----------------------------------------------------------------------
+
+Machine Learning Engineer  (base track)
+   1. Junior ML Engineer                 $   15/hr  Mon, Tue, Wed, Thu, Fri, Sat 7am-5pm (10h)  0.00 PTO/day  skills: logic 6, programming 8
+   2. ML Engineer                        $   22/hr  Mon, Tue, Wed, Thu, Fri, Sat 7am-5pm (10h)  0.02 PTO/day  skills: logic 7, programming 9, robotics 3
+   3. Senior ML Engineer                 $   35/hr  Mon, Tue, Wed, Thu, Fri, Sat 7am-4pm (9h)  0.05 PTO/day  skills: logic 8, programming 10, robotics 5
+   4. Lead ML Engineer                   $   55/hr  Mon, Tue, Wed, Thu, Fri 8am-5pm (9h)  0.10 PTO/day  skills: logic 9, programming 10, rocket_science 3
+   5. Staff ML Engineer                  $   90/hr  Mon, Tue, Wed, Thu, Fri 8am-4pm (8h)  0.15 PTO/day  skills: logic 10, programming 10, rocket_science 5
+
+AI Visionary Track  (branches from level 5)
+   6. Principal ML Engineer              $  130/hr  Mon, Tue, Wed, Thu, Fri 9am-5pm (8h)  0.20 PTO/day  skills: robotics 6, rocket_science 6
+   7. Distinguished Engineer             $  300/hr  Mon, Tue, Wed, Thu 9am-3pm (6h)  0.25 PTO/day  skills: robotics 7, rocket_science 8
+   8. Chief AI Scientist                 $  700/hr  Mon, Tue, Wed 10am-2pm (4h)  0.30 PTO/day  skills: robotics 9, rocket_science 10
+   9. AI Visionary                       $ 3000/hr  Mon, Tue 11am-1pm (2h)  0.35 PTO/day  skills: robotics 10, rocket_science 10
+  10. Singularity Architect              $ 6000/hr  Mon 12pm-2pm (2h)  1.00 PTO/day  skills: robotics 10, rocket_science 10
+
+Corporate Ascension  (branches from level 5)
+   6. Junior Executive                   $  150/hr  Mon, Tue, Wed, Thu, Fri, Sat 8am-5pm (9h)  0.15 PTO/day  skills: charisma 5, entrepreneur 5
+   7. VP of Strategic Exploitation       $  400/hr  Mon, Tue, Wed, Thu, Fri 9am-5pm (8h)  0.20 PTO/day  skills: charisma 7, entrepreneur 7
+   8. Chief Operating Overlord           $ 1200/hr  Mon, Tue, Wed, Thu 10am-4pm (6h)  0.25 PTO/day  skills: charisma 9, entrepreneur 9
+   9. President of Global Domination     $ 4000/hr  Mon, Tue, Wed 11am-3pm (4h)  0.30 PTO/day  skills: charisma 10, entrepreneur 10
+  10. CEO                                $ 8000/hr  Mon, Tue, Wed 12pm-2pm (2h)  1.00 PTO/day  skills: charisma 10, entrepreneur 10
+
+----------------------------------------------------------------------
+FILES
+----------------------------------------------------------------------
+machine_learning_engineer.package        77 resources, 40 strings
+machine_learning_engineer.ts4script      diagnostic console command
+machine_learning_engineer.spec.json      edit and rebuild to tweak
+machine_learning_engineer.manifest.json  every resource id, for conflict checks
+
+----------------------------------------------------------------------
+INSTALL
+----------------------------------------------------------------------
+1. Copy the .package AND the .ts4script into your Mods folder:
+     Windows  Documents\Electronic Arts\The Sims 4\Mods
+     macOS    ~/Documents/Electronic Arts/The Sims 4/Mods
+   They can sit in a subfolder, but no deeper than one level down.
+
+2. In game: Game Options > Other > enable BOTH
+     'Enable Custom Content and Mods'
+     'Script Mods Allowed'
+   Then restart the game fully. Script mods only load at startup.
+
+3. Delete localthumbcache.package from the The Sims 4 folder. Stale
+   cache is the single most common reason a new mod does not appear.
+
+----------------------------------------------------------------------
+VERIFYING IT WORKED
+----------------------------------------------------------------------
+Open the console with Ctrl+Shift+C and run:
+     forge.machine_learning_engineer
+
+  Command responds     -> script loaded. If the career is still
+                          missing, the .package tuning did not
+                          resolve; see TROUBLESHOOTING below.
+  Unknown command      -> the .ts4script is not loading. Check that
+                          script mods are enabled and the file is
+                          not nested too deep.
+
+Then have an adult sim use a phone or computer > Find a Job.
+The career appears as 'Machine Learning Engineer'.
+
+----------------------------------------------------------------------
+TROUBLESHOOTING
+----------------------------------------------------------------------
+The tuning and SimData follow EA's own careers as of game version
+1.127.41.1030, and only reference base-game content. A
+later patch can still rename fields. If the career misbehaves,
+check the game's exception log, which names the tuning file and
+field at fault:
+  Documents/Electronic Arts/The Sims 4/lastException*.txt
+
+----------------------------------------------------------------------
+NOTES
+----------------------------------------------------------------------
+  - Machine Learning Engineer level 4 (Lead ML Engineer): rocket_science 3 is enforced as rocket_science 2, the nearest level with an objective.
+  - Machine Learning Engineer level 5 (Staff ML Engineer): rocket_science 5 is enforced as rocket_science 4, the nearest level with an objective.
+  - AI Visionary Track level 6 (Principal ML Engineer): rocket_science 6 is enforced as rocket_science 4, the nearest level with an objective.
+  - AI Visionary Track level 7 (Distinguished Engineer): rocket_science 8 is enforced as rocket_science 4, the nearest level with an objective.
+  - AI Visionary Track level 8 (Chief AI Scientist): rocket_science 10 is enforced as rocket_science 4, the nearest level with an objective.
+  - AI Visionary Track level 9 (AI Visionary): rocket_science 10 is enforced as rocket_science 4, the nearest level with an objective.
+  - AI Visionary Track level 10 (Singularity Architect): rocket_science 10 is enforced as rocket_science 4, the nearest level with an objective.
+  - Corporate Ascension level 6 (Junior Executive): entrepreneur 5 is enforced as entrepreneur 4, the nearest level with an objective.
+  - Corporate Ascension level 7 (VP of Strategic Exploitation): entrepreneur 7 is enforced as entrepreneur 4, the nearest level with an objective.
+  - Corporate Ascension level 8 (Chief Operating Overlord): entrepreneur 9 is enforced as entrepreneur 4, the nearest level with an objective.
+  - Corporate Ascension level 9 (President of Global Domination): entrepreneur 10 is enforced as entrepreneur 4, the nearest level with an objective.
+  - Corporate Ascension level 10 (CEO): entrepreneur 10 is enforced as entrepreneur 4, the nearest level with an objective.
+  - This mod references pack content (Discover University (EP08), High School Years (EP12)). Players without those packs will get a broken promotion gate; share it with that caveat.
+

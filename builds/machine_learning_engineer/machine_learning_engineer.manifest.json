@@ -1,0 +1,453 @@
+{
+  "career": "Machine Learning Engineer",
+  "mod_key": "machine_learning_engineer",
+  "build_id": "20260913-99326439",
+  "generated_utc": "2026-09-13T23:43:52+00:00",
+  "branches": [
+    {
+      "name": "Machine Learning Engineer",
+      "branches_at": null,
+      "levels": 5
+    },
+    {
+      "name": "AI Visionary Track",
+      "branches_at": 5,
+      "levels": 5
+    },
+    {
+      "name": "Corporate Ascension",
+      "branches_at": 5,
+      "levels": 5
+    }
+  ],
+  "resources": [
+    {
+      "key": "339BC5BD!00000000!E455163D1BCD1FF7",
+      "type": "0x339BC5BD",
+      "bytes": 345
+    },
+    {
+      "key": "545AC67A!009BC58E!E455163D1BCD1FF7",
+      "type": "0x545AC67A",
+      "bytes": 256
+    },
+    {
+      "key": "28B64675!00000000!9841F944BDE56F66",
+      "type": "0x28B64675",
+      "bytes": 275
+    },
+    {
+      "key": "545AC67A!00B6465D!9841F944BDE56F66",
+      "type": "0x545AC67A",
+      "bytes": 265
+    },
+    {
+      "key": "2C70ADF8!00000000!A17487C737B18ECF",
+      "type": "0x2C70ADF8",
+      "bytes": 2118
+    },
+    {
+      "key": "545AC67A!0070ADD4!A17487C737B18ECF",
+      "type": "0x545AC67A",
+      "bytes": 1533
+    },
+    {
+      "key": "28B64675!00000000!9841F944BDE56F65",
+      "type": "0x28B64675",
+      "bytes": 294
+    },
+    {
+      "key": "545AC67A!00B6465D!9841F944BDE56F65",
+      "type": "0x545AC67A",
+      "bytes": 281
+    },
+    {
+      "key": "2C70ADF8!00000000!A17487C737B18ECC",
+      "type": "0x2C70ADF8",
+      "bytes": 2119
+    },
+    {
+      "key": "545AC67A!0070ADD4!A17487C737B18ECC",
+      "type": "0x545AC67A",
+      "bytes": 1533
+    },
+    {
+      "key": "28B64675!00000000!9841F944BDE56F64",
+      "type": "0x28B64675",
+      "bytes": 293
+    },
+    {
+      "key": "545AC67A!00B6465D!9841F944BDE56F64",
+      "type": "0x545AC67A",
+      "bytes": 281
+    },
+    {
+      "key": "2C70ADF8!00000000!A17487C737B18ECD",
+      "type": "0x2C70ADF8",
+      "bytes": 2118
+    },
+    {
+      "key": "545AC67A!0070ADD4!A17487C737B18ECD",
+      "type": "0x545AC67A",
+      "bytes": 1533
+    },
+    {
+      "key": "28B64675!00000000!9841F944BDE56F63",
+      "type": "0x28B64675",
+      "bytes": 294
+    },
+    {
+      "key": "545AC67A!00B6465D!9841F944BDE56F63",
+      "type": "0x545AC67A",
+      "bytes": 281
+    },
+    {
+      "key": "2C70ADF8!00000000!A17487C737B18ECA",
+      "type": "0x2C70ADF8",
+      "bytes": 2118
+    },
+    {
+      "key": "545AC67A!0070ADD4!A17487C737B18ECA",
+      "type": "0x545AC67A",
+      "bytes": 1533
+    },
+    {
+      "key": "28B64675!00000000!9841F944BDE56F62",
+      "type": "0x28B64675",
+      "bytes": 293
+    },
+    {
+      "key": "545AC67A!00B6465D!9841F944BDE56F62",
+      "type": "0x545AC67A",
+      "bytes": 281
+    },
+    {
+      "key": "2C70ADF8!00000000!A17487C737B18ECB",
+      "type": "0x2C70ADF8",
+      "bytes": 2119
+    },
+    {
+      "key": "545AC67A!0070ADD4!A17487C737B18ECB",
+      "type": "0x545AC67A",
+      "bytes": 1533
+    },
+    {
+      "key": "48C75CE3!00000000!8A5AD4FAB8187D9C",
+      "type": "0x48C75CE3",
+      "bytes": 1140
+    },
+    {
+      "key": "545AC67A!00C75CAB!8A5AD4FAB8187D9C",
+      "type": "0x545AC67A",
+      "bytes": 728
+    },
+    {
+      "key": "28B64675!00000000!DCC8979D0F0B3F2C",
+      "type": "0x28B64675",
+      "bytes": 269
+    },
+    {
+      "key": "545AC67A!00B6465D!DCC8979D0F0B3F2C",
+      "type": "0x545AC67A",
+      "bytes": 258
+    },
+    {
+      "key": "2C70ADF8!00000000!B873B6C745C12867",
+      "type": "0x2C70ADF8",
+      "bytes": 2112
+    },
+    {
+      "key": "545AC67A!0070ADD4!B873B6C745C12867",
+      "type": "0x545AC67A",
+      "bytes": 1526
+    },
+    {
+      "key": "28B64675!00000000!DCC8979D0F0B3F2D",
+      "type": "0x28B64675",
+      "bytes": 269
+    },
+    {
+      "key": "545AC67A!00B6465D!DCC8979D0F0B3F2D",
+      "type": "0x545AC67A",
+      "bytes": 258
+    },
+    {
+      "key": "2C70ADF8!00000000!B873B6C745C12866",
+      "type": "0x2C70ADF8",
+      "bytes": 2114
+    },
+    {
+      "key": "545AC67A!0070ADD4!B873B6C745C12866",
+      "type": "0x545AC67A",
+      "bytes": 1526
+    },
+    {
+      "key": "28B64675!00000000!DCC8979D0F0B3F22",
+      "type": "0x28B64675",
+      "bytes": 269
+    },
+    {
+      "key": "545AC67A!00B6465D!DCC8979D0F0B3F22",
+      "type": "0x545AC67A",
+      "bytes": 258
+    },
+    {
+      "key": "2C70ADF8!00000000!B873B6C745C12869",
+      "type": "0x2C70ADF8",
+      "bytes": 2114
+    },
+    {
+      "key": "545AC67A!0070ADD4!B873B6C745C12869",
+      "type": "0x545AC67A",
+      "bytes": 1526
+    },
+    {
+      "key": "28B64675!00000000!DCC8979D0F0B3F23",
+      "type": "0x28B64675",
+      "bytes": 269
+    },
+    {
+      "key": "545AC67A!00B6465D!DCC8979D0F0B3F23",
+      "type": "0x545AC67A",
+      "bytes": 258
+    },
+    {
+      "key": "2C70ADF8!00000000!B873B6C745C12868",
+      "type": "0x2C70ADF8",
+      "bytes": 2117
+    },
+    {
+      "key": "545AC67A!0070ADD4!B873B6C745C12868",
+      "type": "0x545AC67A",
+      "bytes": 1526
+    },
+    {
+      "key": "28B64675!00000000!B418CAE0901C5621",
+      "type": "0x28B64675",
+      "bytes": 270
+    },
+    {
+      "key": "545AC67A!00B6465D!B418CAE0901C5621",
+      "type": "0x545AC67A",
+      "bytes": 259
+    },
+    {
+      "key": "2C70ADF8!00000000!ADC7F49B87379B10",
+      "type": "0x2C70ADF8",
+      "bytes": 2119
+    },
+    {
+      "key": "545AC67A!0070ADD4!ADC7F49B87379B10",
+      "type": "0x545AC67A",
+      "bytes": 1527
+    },
+    {
+      "key": "48C75CE3!00000000!C78DE0B2B815308D",
+      "type": "0x48C75CE3",
+      "bytes": 1044
+    },
+    {
+      "key": "545AC67A!00C75CAB!C78DE0B2B815308D",
+      "type": "0x545AC67A",
+      "bytes": 705
+    },
+    {
+      "key": "28B64675!00000000!C0C859722C3B1718",
+      "type": "0x28B64675",
+      "bytes": 269
+    },
+    {
+      "key": "545AC67A!00B6465D!C0C859722C3B1718",
+      "type": "0x545AC67A",
+      "bytes": 259
+    },
+    {
+      "key": "2C70ADF8!00000000!9C2202974B0B4321",
+      "type": "0x2C70ADF8",
+      "bytes": 2113
+    },
+    {
+      "key": "545AC67A!0070ADD4!9C2202974B0B4321",
+      "type": "0x545AC67A",
+      "bytes": 1527
+    },
+    {
+      "key": "28B64675!00000000!C0C859722C3B1719",
+      "type": "0x28B64675",
+      "bytes": 269
+    },
+    {
+      "key": "545AC67A!00B6465D!C0C859722C3B1719",
+      "type": "0x545AC67A",
+      "bytes": 259
+    },
+    {
+      "key": "2C70ADF8!00000000!9C2202974B0B4320",
+      "type": "0x2C70ADF8",
+      "bytes": 2113
+    },
+    {
+      "key": "545AC67A!0070ADD4!9C2202974B0B4320",
+      "type": "0x545AC67A",
+      "bytes": 1527
+    },
+    {
+      "key": "28B64675!00000000!C0C859722C3B1716",
+      "type": "0x28B64675",
+      "bytes": 270
+    },
+    {
+      "key": "545AC67A!00B6465D!C0C859722C3B1716",
+      "type": "0x545AC67A",
+      "bytes": 259
+    },
+    {
+      "key": "2C70ADF8!00000000!9C2202974B0B432F",
+      "type": "0x2C70ADF8",
+      "bytes": 2116
+    },
+    {
+      "key": "545AC67A!0070ADD4!9C2202974B0B432F",
+      "type": "0x545AC67A",
+      "bytes": 1527
+    },
+    {
+      "key": "28B64675!00000000!C0C859722C3B1717",
+      "type": "0x28B64675",
+      "bytes": 269
+    },
+    {
+      "key": "545AC67A!00B6465D!C0C859722C3B1717",
+      "type": "0x545AC67A",
+      "bytes": 259
+    },
+    {
+      "key": "2C70ADF8!00000000!9C2202974B0B432E",
+      "type": "0x2C70ADF8",
+      "bytes": 2116
+    },
+    {
+      "key": "545AC67A!0070ADD4!9C2202974B0B432E",
+      "type": "0x545AC67A",
+      "bytes": 1527
+    },
+    {
+      "key": "28B64675!00000000!CF871C012868499D",
+      "type": "0x28B64675",
+      "bytes": 270
+    },
+    {
+      "key": "545AC67A!00B6465D!CF871C012868499D",
+      "type": "0x545AC67A",
+      "bytes": 260
+    },
+    {
+      "key": "2C70ADF8!00000000!D90D8D14842319A2",
+      "type": "0x2C70ADF8",
+      "bytes": 2118
+    },
+    {
+      "key": "545AC67A!0070ADD4!D90D8D14842319A2",
+      "type": "0x545AC67A",
+      "bytes": 1528
+    },
+    {
+      "key": "48C75CE3!00000000!D552F4C2516DFC1D",
+      "type": "0x48C75CE3",
+      "bytes": 1045
+    },
+    {
+      "key": "545AC67A!00C75CAB!D552F4C2516DFC1D",
+      "type": "0x545AC67A",
+      "bytes": 706
+    },
+    {
+      "key": "73996BEB!00000000!AA9715A51B164FC9",
+      "type": "0x73996BEB",
+      "bytes": 15499
+    },
+    {
+      "key": "545AC67A!00996B98!AA9715A51B164FC9",
+      "type": "0x545AC67A",
+      "bytes": 661
+    },
+    {
+      "key": "00B2D882!00000000!8174912C5ECC5A13",
+      "type": "0x00B2D882",
+      "bytes": 500128
+    },
+    {
+      "key": "00B2D882!00000000!9CE02D5A32720AC0",
+      "type": "0x00B2D882",
+      "bytes": 10128
+    },
+    {
+      "key": "00B2D882!00000000!9EC57093BBD62CEE",
+      "type": "0x00B2D882",
+      "bytes": 500128
+    },
+    {
+      "key": "00B2D882!00000000!B16B67B40708DA6F",
+      "type": "0x00B2D882",
+      "bytes": 500128
+    },
+    {
+      "key": "00B2D882!00000000!B553F7CB647C3B29",
+      "type": "0x00B2D882",
+      "bytes": 10128
+    },
+    {
+      "key": "00B2D882!00000000!BBF41BAADACF4659",
+      "type": "0x00B2D882",
+      "bytes": 10128
+    },
+    {
+      "key": "220557DA!00000000!0055EBB45EE8C48A",
+      "type": "0x220557DA",
+      "bytes": 2403
+    }
+  ],
+  "tuning_names": {
+    "machine_learning_engineer:icon_picker_machine_learning_engineer": "0x9CE02D5A32720AC0",
+    "machine_learning_engineer:icon_panel_machine_learning_engineer": "0x9EC57093BBD62CEE",
+    "machine_learning_engineer:icon_picker_ai_visionary_track": "0xB553F7CB647C3B29",
+    "machine_learning_engineer:icon_panel_ai_visionary_track": "0x8174912C5ECC5A13",
+    "machine_learning_engineer:icon_picker_corporate_ascension": "0xBBF41BAADACF4659",
+    "machine_learning_engineer:icon_panel_corporate_ascension": "0xB16B67B40708DA6F",
+    "machine_learning_engineer:performance": "0xE455163D1BCD1FF7",
+    "machine_learning_engineer:aspiration_machine_learning_engineer_1": "0x9841F944BDE56F66",
+    "machine_learning_engineer:career_level_machine_learning_engineer_1": "0xA17487C737B18ECF",
+    "machine_learning_engineer:aspiration_machine_learning_engineer_2": "0x9841F944BDE56F65",
+    "machine_learning_engineer:career_level_machine_learning_engineer_2": "0xA17487C737B18ECC",
+    "machine_learning_engineer:aspiration_machine_learning_engineer_3": "0x9841F944BDE56F64",
+    "machine_learning_engineer:career_level_machine_learning_engineer_3": "0xA17487C737B18ECD",
+    "machine_learning_engineer:aspiration_machine_learning_engineer_4": "0x9841F944BDE56F63",
+    "machine_learning_engineer:career_level_machine_learning_engineer_4": "0xA17487C737B18ECA",
+    "machine_learning_engineer:aspiration_machine_learning_engineer_5": "0x9841F944BDE56F62",
+    "machine_learning_engineer:career_level_machine_learning_engineer_5": "0xA17487C737B18ECB",
+    "machine_learning_engineer:career_track_ai_visionary_track": "0xC78DE0B2B815308D",
+    "machine_learning_engineer:career_track_corporate_ascension": "0xD552F4C2516DFC1D",
+    "machine_learning_engineer:career_track_machine_learning_engineer": "0x8A5AD4FAB8187D9C",
+    "machine_learning_engineer:aspiration_ai_visionary_track_6": "0xDCC8979D0F0B3F2C",
+    "machine_learning_engineer:career_level_ai_visionary_track_6": "0xB873B6C745C12867",
+    "machine_learning_engineer:aspiration_ai_visionary_track_7": "0xDCC8979D0F0B3F2D",
+    "machine_learning_engineer:career_level_ai_visionary_track_7": "0xB873B6C745C12866",
+    "machine_learning_engineer:aspiration_ai_visionary_track_8": "0xDCC8979D0F0B3F22",
+    "machine_learning_engineer:career_level_ai_visionary_track_8": "0xB873B6C745C12869",
+    "machine_learning_engineer:aspiration_ai_visionary_track_9": "0xDCC8979D0F0B3F23",
+    "machine_learning_engineer:career_level_ai_visionary_track_9": "0xB873B6C745C12868",
+    "machine_learning_engineer:aspiration_ai_visionary_track_10": "0xB418CAE0901C5621",
+    "machine_learning_engineer:career_level_ai_visionary_track_10": "0xADC7F49B87379B10",
+    "machine_learning_engineer:aspiration_corporate_ascension_6": "0xC0C859722C3B1718",
+    "machine_learning_engineer:career_level_corporate_ascension_6": "0x9C2202974B0B4321",
+    "machine_learning_engineer:aspiration_corporate_ascension_7": "0xC0C859722C3B1719",
+    "machine_learning_engineer:career_level_corporate_ascension_7": "0x9C2202974B0B4320",
+    "machine_learning_engineer:aspiration_corporate_ascension_8": "0xC0C859722C3B1716",
+    "machine_learning_engineer:career_level_corporate_ascension_8": "0x9C2202974B0B432F",
+    "machine_learning_engineer:aspiration_corporate_ascension_9": "0xC0C859722C3B1717",
+    "machine_learning_engineer:career_level_corporate_ascension_9": "0x9C2202974B0B432E",
+    "machine_learning_engineer:aspiration_corporate_ascension_10": "0xCF871C012868499D",
+    "machine_learning_engineer:career_level_corporate_ascension_10": "0xD90D8D14842319A2",
+    "machine_learning_engineer:career": "0xAA9715A51B164FC9"
+  }
+}

@@ -48,8 +48,11 @@ def run_cli(args) -> int:
             )
             spec = result.spec
 
-        build = build_career(spec, args.output or settings.output_dir,
-                             on_progress=lambda m: print(f"  {m}"))
+        build = build_career(
+            spec, args.output or settings.output_dir,
+            on_progress=lambda m: print(f"  {m}"),
+            api_key=key, image_model=settings.image_model,
+        )
         print(f"\nBuilt: {build.output_dir}")
         for warning in build.warnings:
             print(f"  note: {warning}")

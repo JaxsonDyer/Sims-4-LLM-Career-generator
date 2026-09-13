@@ -1,0 +1,340 @@
+{
+  "name": "Machine Learning Engineer",
+  "description": "Claw your way from underpaid code-monkey to a six-figure-a-day tech deity, then choose whether to remain a brilliant recluse or seize the corner office and everyone's soul along with it.",
+  "branches": [
+    {
+      "name": "Machine Learning Engineer",
+      "description": "The grueling climb from debugging other people's code at 2am to being one of the most sought-after minds in AI.",
+      "branches_at": null,
+      "levels": [
+        {
+          "level": 1,
+          "title": "Junior ML Engineer",
+          "pay_per_hour": 15,
+          "description": "You barely got hired despite years of self-taught skill, and now you're fixing production bugs no one else wants to touch.",
+          "required_skills": {
+            "logic": 6,
+            "programming": 8
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday"
+          ],
+          "start_hour": 7,
+          "hours_per_day": 10,
+          "promotion_message": "You've landed the job. Barely. Hope you like long nights and short paychecks.",
+          "pto_per_day": 0.0
+        },
+        {
+          "level": 2,
+          "title": "ML Engineer",
+          "pay_per_hour": 22,
+          "description": "You've stopped being the intern who gets yelled at, but the hours are still brutal.",
+          "required_skills": {
+            "logic": 7,
+            "programming": 9,
+            "robotics": 3
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday"
+          ],
+          "start_hour": 7,
+          "hours_per_day": 10,
+          "promotion_message": "You've earned a real title. The grind continues, but now you get a badge that says 'ML Engineer' instead of 'Intern.'",
+          "pto_per_day": 0.02
+        },
+        {
+          "level": 3,
+          "title": "Senior ML Engineer",
+          "pay_per_hour": 35,
+          "description": "Your models finally work more often than they crash, and management has noticed.",
+          "required_skills": {
+            "logic": 8,
+            "programming": 10,
+            "robotics": 5
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday"
+          ],
+          "start_hour": 7,
+          "hours_per_day": 9,
+          "promotion_message": "Senior title, senior stress. But at least people ask your opinion in meetings now.",
+          "pto_per_day": 0.05
+        },
+        {
+          "level": 4,
+          "title": "Lead ML Engineer",
+          "pay_per_hour": 55,
+          "description": "You lead a small team of engineers who are just as exhausted as you used to be.",
+          "required_skills": {
+            "logic": 9,
+            "programming": 10,
+            "rocket_science": 3
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday"
+          ],
+          "start_hour": 8,
+          "hours_per_day": 9,
+          "promotion_message": "You're a lead now. Weekends are yours again, mostly, sometimes, occasionally.",
+          "pto_per_day": 0.1
+        },
+        {
+          "level": 5,
+          "title": "Staff ML Engineer",
+          "pay_per_hour": 90,
+          "description": "Your work now influences products used by millions, and the company finally pays you like it.",
+          "required_skills": {
+            "logic": 10,
+            "programming": 10,
+            "rocket_science": 5
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday"
+          ],
+          "start_hour": 8,
+          "hours_per_day": 8,
+          "promotion_message": "Staff Engineer. The grind is finally starting to pay off, literally. From here, your path forks.",
+          "pto_per_day": 0.15
+        }
+      ]
+    },
+    {
+      "name": "AI Visionary Track",
+      "description": "Retreat from the corporate circus and become the reclusive genius whose algorithms quietly run the world.",
+      "branches_at": 5,
+      "levels": [
+        {
+          "level": 6,
+          "title": "Principal ML Engineer",
+          "pay_per_hour": 130,
+          "description": "You now solve problems the rest of the company doesn't even understand yet.",
+          "required_skills": {
+            "robotics": 6,
+            "rocket_science": 6
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday"
+          ],
+          "start_hour": 9,
+          "hours_per_day": 8,
+          "promotion_message": "Principal Engineer. Your code is basically scripture to the junior devs now.",
+          "pto_per_day": 0.2
+        },
+        {
+          "level": 7,
+          "title": "Distinguished Engineer",
+          "pay_per_hour": 300,
+          "description": "Conferences fight over your keynote slot, and your inbox is full of job offers you ignore.",
+          "required_skills": {
+            "robotics": 7,
+            "rocket_science": 8
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday"
+          ],
+          "start_hour": 9,
+          "hours_per_day": 6,
+          "promotion_message": "Distinguished Engineer. You could retire on your reputation alone, but the math is too fun to quit.",
+          "pto_per_day": 0.25
+        },
+        {
+          "level": 8,
+          "title": "Chief AI Scientist",
+          "pay_per_hour": 700,
+          "description": "You publish the papers everyone else builds their entire careers on top of.",
+          "required_skills": {
+            "robotics": 9,
+            "rocket_science": 10
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday"
+          ],
+          "start_hour": 10,
+          "hours_per_day": 4,
+          "promotion_message": "Chief AI Scientist. You work fewer hours than the interns and understand a thousand times more.",
+          "pto_per_day": 0.3
+        },
+        {
+          "level": 9,
+          "title": "AI Visionary",
+          "pay_per_hour": 3000,
+          "description": "Governments and megacorps alike quietly ask for your blessing before shipping anything.",
+          "required_skills": {
+            "robotics": 10,
+            "rocket_science": 10
+          },
+          "work_days": [
+            "monday",
+            "tuesday"
+          ],
+          "start_hour": 11,
+          "hours_per_day": 2,
+          "promotion_message": "AI Visionary. Two days a week, and the world still bends around your models.",
+          "pto_per_day": 0.35
+        },
+        {
+          "level": 10,
+          "title": "Singularity Architect",
+          "pay_per_hour": 6000,
+          "description": "One day a week, two quiet hours, and you casually reshape the future of intelligence itself.",
+          "required_skills": {
+            "robotics": 10,
+            "rocket_science": 10
+          },
+          "work_days": [
+            "monday"
+          ],
+          "start_hour": 12,
+          "hours_per_day": 2,
+          "promotion_message": "You are the Singularity Architect. Take all the time off you want; the machines basically run themselves now, and so do you.",
+          "pto_per_day": 1.0
+        }
+      ]
+    },
+    {
+      "name": "Corporate Ascension",
+      "description": "Trade the lab coat for a boardroom and climb toward the top by any means necessary.",
+      "branches_at": 5,
+      "levels": [
+        {
+          "level": 6,
+          "title": "Junior Executive",
+          "pay_per_hour": 150,
+          "description": "You've traded algorithms for office politics, and you're surprisingly good at both.",
+          "required_skills": {
+            "charisma": 5,
+            "entrepreneur": 5
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday"
+          ],
+          "start_hour": 8,
+          "hours_per_day": 9,
+          "promotion_message": "Junior Executive. You smile a lot more now, even when you don't mean it.",
+          "pto_per_day": 0.15
+        },
+        {
+          "level": 7,
+          "title": "VP of Strategic Exploitation",
+          "pay_per_hour": 400,
+          "description": "You've learned to call layoffs 'synergy optimization' with a completely straight face.",
+          "required_skills": {
+            "charisma": 7,
+            "entrepreneur": 7
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday"
+          ],
+          "start_hour": 9,
+          "hours_per_day": 8,
+          "promotion_message": "VP of Strategic Exploitation. Somewhere, an intern just lost their job because of a decision you made before lunch.",
+          "pto_per_day": 0.2
+        },
+        {
+          "level": 8,
+          "title": "Chief Operating Overlord",
+          "pay_per_hour": 1200,
+          "description": "Your name is on patents you didn't write and decisions you barely remember making.",
+          "required_skills": {
+            "charisma": 9,
+            "entrepreneur": 9
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday"
+          ],
+          "start_hour": 10,
+          "hours_per_day": 6,
+          "promotion_message": "Chief Operating Overlord. Fewer meetings, more empires quietly crumbling under your signature.",
+          "pto_per_day": 0.25
+        },
+        {
+          "level": 9,
+          "title": "President of Global Domination",
+          "pay_per_hour": 4000,
+          "description": "Entire markets shift when you casually mention a product idea at dinner.",
+          "required_skills": {
+            "charisma": 10,
+            "entrepreneur": 10
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday"
+          ],
+          "start_hour": 11,
+          "hours_per_day": 4,
+          "promotion_message": "President of Global Domination. Three days a week, and half the planet's economy answers to you.",
+          "pto_per_day": 0.3
+        },
+        {
+          "level": 10,
+          "title": "CEO",
+          "pay_per_hour": 8000,
+          "description": "Three short days a week, unlimited vacation, and an empire built on other people's brilliant, underpaid work.",
+          "required_skills": {
+            "charisma": 10,
+            "entrepreneur": 10
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday"
+          ],
+          "start_hour": 12,
+          "hours_per_day": 2,
+          "promotion_message": "You are the CEO. Take all the time off you want, the empire runs on everyone else's exhaustion now, not yours.",
+          "pto_per_day": 1.0
+        }
+      ]
+    }
+  ],
+  "author": "CareerForge",
+  "mod_key": "machine_learning_engineer",
+  "icon_hint": "a glowing neural network node inside a laptop silhouette",
+  "company_name": "Nexora Cognition Labs",
+  "icon_mode": "custom"
+}

@@ -12,12 +12,15 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
 
 from . import ea_refs
 from .dbpf import Resource, write_package
+from .game_content import GameContent, effective_skills, skill_pack
+from .icons import prepare_icon_art
 from .ids import (
     SIMDATA_GROUP, InstanceAllocator, ResourceType, check_collisions,
     stbl_instance,
@@ -82,13 +85,92 @@ def _build_id(spec: CareerSpec) -> str:
     return f"{stamp}-{digest}"
 
 
+def _fmt_hour(hour: int) -> str:
+    """9 -> '9am', 22 -> '10pm', 0 -> '12am'."""
+    hour %= 24
+    label = hour % 12 or 12
+    return f"{label}{'am' if hour < 12 else 'pm'}"
+
+
+def _skill_gate_notes(notes: list[str], content: GameContent | None,
+                      enabled_packs: list[str] | None) -> list[str]:
+    """
+    Turn the per-level enforcement notes into grouped warnings.
+
+    Eleven near-identical "robotics 6 is not enforced" lines say less than
+    one honest summary: which skills have no objectives available, why, and
+    what that means for the player.
+    """
+    if not notes:
+        return []
+
+    available = effective_skills(content, enabled_packs)
+    # Skills mentioned in the notes that have no objective table at all.
+    missing: dict[str, int] = {}
+    for note in notes:
+        match = re.match(r".+?: (\w+) \d+ is not enforced", note)
+        if match and match.group(1).lower() not in available:
+            missing[match.group(1).lower()] = missing.get(match.group(1).lower(), 0) + 1
+
+    grouped: list[str] = []
+    if missing:
+        skills = ", ".join(sorted(missing))
+        grouped.append(
+            f"{sum(missing.values())} skill gate(s) cannot be enforced in-game: "
+            f"no promotion objectives exist for {skills} at the required "
+            f"levels. Those promotions rely on work performance alone; the "
+            f"requirements are flavour."
+        )
+    # Keep any nearest-level adjustment notes as-is; there are few of them.
+    grouped.extend(n for n in notes if "nearest level" in n)
+    return grouped
+
+
+def _pack_requirements(spec: CareerSpec, content: GameContent | None,
+                       enabled_packs: list[str] | None) -> list[str]:
+    """Packs a built mod references, for the shareability warning."""
+    if content is None:
+        return []
+    origin = skill_pack(content)
+    needed = {
+        origin[skill]
+        for branch in spec.branches
+        for level in branch.levels
+        for skill in level.required_skills
+        if skill in origin
+    }
+    # Only packs that are actually enabled contribute references.
+    return sorted(p for p in needed if p in (enabled_packs or []))
+
+
+def _schedule_text(level) -> str:
+    """One line of work schedule for the build report."""
+    days = ", ".join(d[:3].capitalize() for d in level.work_days)
+    end = _fmt_hour(level.start_hour + level.hours_per_day)
+    return (f"{days} {_fmt_hour(level.start_hour)}-{end} "
+            f"({level.hours_per_day}h)")
+
+
 def build_career(spec: CareerSpec, output_root: str | Path,
-                 on_progress=None) -> BuildResult:
+                 on_progress=None, *, api_key: str = "",
+                 image_model: str = "", game_dir: str | None = None,
+                 generate=None,
+                 content: GameContent | None = None,
+                 enabled_packs: list[str] | None = None,
+                 ) -> BuildResult:
     """
     Build a complete career mod.
 
     Validates first and refuses to write anything if the spec is bad, so a
     failed build never leaves half a mod in the output folder.
+
+    `api_key` / `image_model` / `game_dir` feed the custom icon pipeline;
+    they are only used when the spec asks for custom icons, and every
+    failure in that pipeline falls back to EA's own icons rather than
+    failing the build. `generate` overrides the image call for tests.
+
+    `content` / `enabled_packs` decide which pack skill objectives may be
+    referenced (base game only when content is None).
     """
     def report(message: str) -> None:
         if on_progress:
@@ -108,9 +190,29 @@ def build_career(spec: CareerSpec, output_root: str | Path,
     alloc = InstanceAllocator(spec.mod_key)
     strings = StringTable()
 
+    icon_resources: dict[int, bytes] = {}
+    icon_overrides: dict[str, tuple[int, int]] = {}
+    if spec.icon_mode == "custom":
+        report("Preparing custom icon art...")
+        icon_set = prepare_icon_art(
+            spec, alloc, output_dir, api_key=api_key,
+            image_model=image_model, game_dir=game_dir,
+            generate=generate, on_progress=report,
+        )
+        warnings.extend(icon_set.warnings)
+        icon_resources.update(icon_set.resources)
+        icon_overrides = {
+            key: (art.picker_instance, art.panel_instance)
+            for key, art in icon_set.branches.items()
+        }
+
     report("Generating tuning XML and SimData...")
-    generated = build_all_tuning(spec, alloc, strings)
-    warnings.extend(generated.notes)
+    skill_objectives = effective_skills(content, enabled_packs)
+    generated = build_all_tuning(spec, alloc, strings,
+                                 icon_overrides=icon_overrides,
+                                 skill_objectives=skill_objectives)
+    warnings.extend(_skill_gate_notes(generated.notes, content, enabled_packs))
+    generated.notes = []
 
     collisions = check_collisions(alloc)
     if collisions:
@@ -119,6 +221,11 @@ def build_career(spec: CareerSpec, output_root: str | Path,
     resources: list[Resource] = []
     for item in generated.resources:
         resources.extend(package_resources(item, alloc))
+    for instance, data in sorted(icon_resources.items()):
+        resources.append(Resource(
+            type_id=ResourceType.DDS, group_id=0,
+            instance_id=instance, data=data,
+        ))
 
     report(f"Building string table ({len(strings)} strings)...")
     resources.append(Resource(
@@ -184,6 +291,16 @@ def build_career(spec: CareerSpec, output_root: str | Path,
             "Career has no branches. That is valid, but most careers split "
             "into two specialisations near the top."
         )
+    needed_packs = _pack_requirements(spec, content, enabled_packs)
+    if needed_packs and content is not None:
+        names = ", ".join(
+            f"{content.name_for(p)} ({p})" for p in needed_packs
+        )
+        warnings.append(
+            f"This mod references pack content ({names}). Players without "
+            f"those packs will get a broken promotion gate; share it with "
+            f"that caveat."
+        )
 
     report("Writing build report...")
     report_path = output_dir / "BUILD_REPORT.txt"
@@ -232,10 +349,13 @@ def _render_report(spec: CareerSpec, manifest: dict,
             skills = ", ".join(
                 f"{k} {v}" for k, v in sorted(level.required_skills.items())
             ) or "none"
-            days = len(level.work_days)
+            pto = (level.pto_per_day
+                   if level.pto_per_day is not None
+                   else ea_refs.PTO_PER_DAY[min(level.level, 10)])
             add(f"  {level.level:>2}. {level.title:<34} "
                 f"${level.pay_per_hour:>5}/hr  "
-                f"{days}d  skills: {skills}")
+                f"{_schedule_text(level)}  "
+                f"{pto:.2f} PTO/day  skills: {skills}")
     add("")
 
     add("-" * 70)

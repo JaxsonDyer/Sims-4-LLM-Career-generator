@@ -176,38 +176,62 @@ def write_package(resources: list[Resource], path: str | Path) -> Path:
 # Reading
 # ---------------------------------------------------------------------------
 
-def read_package(path: str | Path) -> list[Resource]:
-    """
-    Read every resource out of a .package file.
+@dataclass
+class IndexEntry:
+    """One entry from a package's index, before its payload is read."""
 
-    Used for clone mode, where an existing career package is the structural
-    template. Handles constant-field index flags, which game packages use.
+    type_id: int
+    group_id: int
+    instance_id: int  # full 64-bit
+    offset: int
+    size: int
+    mem_size: int
+    compression: int
+    deleted: bool = False
+
+    @property
+    def key(self) -> tuple[int, int, int]:
+        return (self.type_id, self.group_id, self.instance_id)
+
+    def key_string(self) -> str:
+        return f"{self.type_id:08X}!{self.group_id:08X}!{self.instance_id:016X}"
+
+
+def iter_index(path: str | Path) -> list[IndexEntry]:
+    """
+    Read a package's index without touching any resource payloads.
+
+    The game's own Client packages hold hundreds of megabytes of resources;
+    callers that only want a few instances (the EA icon extractor) should
+    scan this list and then pull individual payloads with read_resource_at.
     """
     path = Path(path)
-    blob = path.read_bytes()
-    if len(blob) < HEADER_SIZE or blob[:4] != MAGIC:
-        raise DBPFError(f"{path.name} is not a DBPF package (bad magic bytes)")
+    with open(path, "rb") as handle:
+        header = handle.read(HEADER_SIZE)
+        if len(header) < HEADER_SIZE or header[:4] != MAGIC:
+            raise DBPFError(
+                f"{path.name} is not a DBPF package (bad magic bytes)"
+            )
+        major, minor = struct.unpack_from("<II", header, 0x04)
+        if major != 2:
+            raise DBPFError(
+                f"{path.name} is DBPF {major}.{minor}; The Sims 4 uses 2.x. "
+                f"This looks like a Sims 2 or Sims 3 package."
+            )
+        index_count = struct.unpack_from("<I", header, 0x24)[0]
+        index_size = struct.unpack_from("<I", header, 0x2C)[0]
+        # s4pi: prefer the 0x40 position, fall back to the legacy 0x28 one.
+        index_offset = (struct.unpack_from("<I", header, 0x40)[0]
+                        or struct.unpack_from("<I", header, 0x28)[0])
+        if index_offset + index_size > path.stat().st_size:
+            raise DBPFError(
+                f"{path.name} index runs past end of file; truncated?"
+            )
+        handle.seek(index_offset)
+        blob = handle.read(index_size)
 
-    major, minor = struct.unpack_from("<II", blob, 0x04)
-    if major != 2:
-        raise DBPFError(
-            f"{path.name} is DBPF {major}.{minor}; The Sims 4 uses 2.x. "
-            f"This looks like a Sims 2 or Sims 3 package."
-        )
-
-    index_count = struct.unpack_from("<I", blob, 0x24)[0]
-    index_size = struct.unpack_from("<I", blob, 0x2C)[0]
-    # s4pi: prefer the 0x40 position, fall back to the legacy 0x28 one.
-    index_offset = (struct.unpack_from("<I", blob, 0x40)[0]
-                    or struct.unpack_from("<I", blob, 0x28)[0])
-
-    if index_offset + index_size > len(blob):
-        raise DBPFError(f"{path.name} index runs past end of file; truncated?")
-
-    cursor = index_offset
-    flags = struct.unpack_from("<I", blob, cursor)[0]
-    cursor += 4
-
+    cursor = 4  # past the flags word, parsed just below
+    flags = struct.unpack_from("<I", blob, 0)[0]
     const_type = const_group = const_inst_high = None
     if flags & 0x1:
         const_type = struct.unpack_from("<I", blob, cursor)[0]
@@ -219,8 +243,7 @@ def read_package(path: str | Path) -> list[Resource]:
         const_inst_high = struct.unpack_from("<I", blob, cursor)[0]
         cursor += 4
 
-    resources: list[Resource] = []
-    deleted = 0
+    entries: list[IndexEntry] = []
     for _ in range(index_count):
         if const_type is None:
             type_id = struct.unpack_from("<I", blob, cursor)[0]
@@ -246,37 +269,54 @@ def read_package(path: str | Path) -> list[Resource]:
         cursor += 4
 
         size = size_field & 0x7FFFFFFF
-        if offset == 0xFFFFFFFF or (size == 1 and mem_size == 0xFFFFFFFF):
-            deleted += 1  # s4pi treats these as deleted placeholders
-            continue
-        if offset + size > len(blob):
-            raise DBPFError(
-                f"resource {type_id:08X}!{group_id:08X} in {path.name} "
-                f"runs past end of file"
-            )
-        payload = blob[offset:offset + size]
-        label = f"{type_id:08X}!{group_id:08X}!{(inst_high << 32) | inst_low:016X}"
+        deleted = offset == 0xFFFFFFFF or (size == 1 and mem_size == 0xFFFFFFFF)
+        entries.append(IndexEntry(
+            type_id=type_id, group_id=group_id,
+            instance_id=(inst_high << 32) | inst_low,
+            offset=offset, size=size, mem_size=mem_size,
+            compression=comp, deleted=deleted,
+        ))
+    return entries
 
-        if size == mem_size:
-            data = payload
-        else:
-            data = _decompress(payload, mem_size, label, path.name)
 
+def read_resource_at(path: str | Path, entry: IndexEntry) -> bytes:
+    """Read and, if needed, decompress one resource's payload."""
+    path = Path(path)
+    with open(path, "rb") as handle:
+        handle.seek(entry.offset)
+        payload = handle.read(entry.size)
+    if len(payload) != entry.size:
+        raise DBPFError(
+            f"resource {entry.key_string()} in {path.name} is truncated"
+        )
+    if entry.size == entry.mem_size:
+        return payload
+    return _decompress(payload, entry.mem_size, entry.key_string(), path.name)
+
+
+def read_package(path: str | Path) -> list[Resource]:
+    """
+    Read every resource out of a .package file.
+
+    Used for clone mode, where an existing career package is the structural
+    template. Handles constant-field index flags, which game packages use.
+    For large packages where only a few resources are wanted, prefer
+    iter_index + read_resource_at.
+    """
+    resources: list[Resource] = []
+    for entry in iter_index(path):
+        if entry.deleted:
+            continue  # s4pi treats these as deleted placeholders
+        data = read_resource_at(path, entry)
         resources.append(
             Resource(
-                type_id=type_id,
-                group_id=group_id,
-                instance_id=(inst_high << 32) | inst_low,
+                type_id=entry.type_id,
+                group_id=entry.group_id,
+                instance_id=entry.instance_id,
                 data=data,
-                compress=(comp != COMP_NONE),
-                _was_compressed=(comp != COMP_NONE),
+                compress=(entry.compression != COMP_NONE),
+                _was_compressed=(entry.compression != COMP_NONE),
             )
-        )
-
-    if len(resources) + deleted != index_count:
-        raise DBPFError(
-            f"expected {index_count} resources in {path.name}, "
-            f"parsed {len(resources) + deleted}"
         )
     return resources
 

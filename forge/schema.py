@@ -30,6 +30,22 @@ KNOWN_SKILLS = {
     "rock_climbing", "knitting", "cross_stitch", "entrepreneur",
 }
 
+# Pack skills discovered by scanning the installed game (game_content).
+# Extends the allowed skill set process-wide so specs drafted with pack
+# skills also validate.
+_extra_skills: set[str] = set()
+
+
+def set_extra_skills(names: set[str] | list[str] | None) -> None:
+    """Declare pack skills available in this session (from a game scan)."""
+    global _extra_skills
+    _extra_skills = {str(n).lower() for n in (names or set())}
+
+
+def known_skills() -> set[str]:
+    """The full allowed skill set: base game plus registered pack skills."""
+    return KNOWN_SKILLS | _extra_skills
+
 MAX_LEVELS = 10
 MAX_BRANCHES = 3
 
@@ -60,6 +76,8 @@ class CareerLevel:
     start_hour: int = 9
     hours_per_day: int = 8
     promotion_message: str = ""
+    # Paid time off accrued per work day, 0-1. None = use EA's pacing table.
+    pto_per_day: float | None = None
 
     def validate(self, ctx: str) -> list[str]:
         problems: list[str] = []
@@ -82,13 +100,18 @@ class CareerLevel:
             problems.append(f"{where}: start_hour must be 0-23")
         if not 1 <= self.hours_per_day <= 12:
             problems.append(f"{where}: hours_per_day must be 1-12")
+        if self.pto_per_day is not None and not 0 <= self.pto_per_day <= 1:
+            problems.append(
+                f"{where}: pto_per_day must be 0-1 (a fraction of a vacation "
+                f"day earned per work day), got {self.pto_per_day}"
+            )
         if not self.work_days:
             problems.append(f"{where}: needs at least one work day")
         for day in self.work_days:
             if day.lower() not in WEEKDAYS:
                 problems.append(f"{where}: {day!r} is not a weekday")
         for skill, value in self.required_skills.items():
-            if skill.lower() not in KNOWN_SKILLS:
+            if skill.lower() not in known_skills():
                 problems.append(
                     f"{where}: unknown skill {skill!r}. Known skills include "
                     f"charisma, logic, fitness, painting, writing."
@@ -173,6 +196,9 @@ class CareerSpec:
     icon_hint: str = ""
     # Employer shown in join/quit notifications. Falls back to the name.
     company_name: str = ""
+    # "ea" = keyword-picked EA icons; "custom" = AI-generated art styled
+    # after EA's own icons. The player chooses this; the model never does.
+    icon_mode: str = "ea"
 
     def __post_init__(self) -> None:
         if not self.mod_key:
@@ -194,6 +220,11 @@ class CareerSpec:
             problems.append("career has no name")
         if len(self.name) > 50:
             problems.append(f"{ctx}: name is over 50 characters")
+        if self.icon_mode not in ("ea", "custom"):
+            problems.append(
+                f"{ctx}: icon_mode must be 'ea' or 'custom', "
+                f"got {self.icon_mode!r}"
+            )
         if not re.fullmatch(r"[a-z0-9_]+", self.mod_key or ""):
             problems.append(
                 f"{ctx}: mod_key {self.mod_key!r} must be lowercase letters, "
@@ -269,6 +300,14 @@ class CareerSpec:
             except (TypeError, ValueError):
                 return default
 
+        def as_float_opt(value) -> float | None:
+            if value is None or value == "":
+                return None
+            try:
+                return float(value)
+            except (TypeError, ValueError):
+                return None
+
         def build_level(raw: dict[str, Any], fallback_index: int) -> CareerLevel:
             if not isinstance(raw, dict):
                 raise SpecError(f"a career level was {type(raw).__name__}, not an object")
@@ -303,6 +342,7 @@ class CareerSpec:
                 start_hour=as_int(raw.get("start_hour"), 9),
                 hours_per_day=as_int(raw.get("hours_per_day"), 8),
                 promotion_message=str(raw.get("promotion_message", "")).strip(),
+                pto_per_day=as_float_opt(raw.get("pto_per_day")),
             )
 
         raw_branches = data.get("branches")
@@ -346,6 +386,7 @@ class CareerSpec:
             mod_key=str(data.get("mod_key", "")).strip().lower(),
             icon_hint=str(data.get("icon_hint", "")).strip(),
             company_name=str(data.get("company_name") or "").strip(),
+            icon_mode=str(data.get("icon_mode") or "ea").strip().lower(),
         )
 
     @classmethod
@@ -379,6 +420,7 @@ JSON_SCHEMA_HINT = """{
           "work_days": ["monday","tuesday","wednesday","thursday","friday"],
           "start_hour": 9,
           "hours_per_day": 8,
+          "pto_per_day": 0.25,
           "promotion_message": "string shown on promotion to this level"
         }
       ]

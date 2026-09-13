@@ -18,6 +18,7 @@ from dataclasses import dataclass, asdict, field
 from pathlib import Path
 
 from .env import load_env, find_env_file
+from .imagegen import DEFAULT_IMAGE_MODEL
 
 # Keys that came from a .env file, recorded so the interface can say where
 # the active key was found without ever displaying the key itself.
@@ -63,6 +64,13 @@ class Settings:
     max_attempts: int = 3
     output_dir: str = ""
     mods_dir: str = ""
+    # Image model used when a career asks for custom AI-generated icons.
+    image_model: str = DEFAULT_IMAGE_MODEL
+    # Installed-game folder override; blank = auto-detect the usual paths.
+    game_dir: str = ""
+    # Pack folders (EP07, GP04, ...) whose content may be referenced.
+    # None = never scanned; a list (possibly empty) = user has chosen.
+    enabled_packs: list[str] | None = None
     recent_models: list[str] = field(default_factory=lambda: list(DEFAULT_MODELS))
 
     def __post_init__(self) -> None:
@@ -132,6 +140,9 @@ class Settings:
                 settings.temperature = float(env_temp)
             except ValueError:
                 pass
+        env_image = os.environ.get("CAREER_FORGE_IMAGE_MODEL", "").strip()
+        if env_image:
+            settings.image_model = env_image
 
         return settings
 

@@ -1,0 +1,89 @@
+======================================================================
+  Machine Learning Engineer
+  built by Sims 4 Career Forge - 2026-09-12T04:49:26+00:00
+======================================================================
+
+Grind through brutal data-labeling all-nighters to become an AI genius who eventually works two days a week for a fortune — or claw your way to the very top of the company and start making decisions the rest of Sulani will regret.
+
+----------------------------------------------------------------------
+CAREER STRUCTURE
+----------------------------------------------------------------------
+
+Foundations in Machine Learning  (base track)
+   1. Data Labeling Intern               $   15/hr  Mon, Tue, Wed, Thu, Fri, Sat 6am-4pm (10h)  0.00 PTO/day  skills: logic 2, programming 3
+   2. Junior Data Wrangler               $   20/hr  Mon, Tue, Wed, Thu, Fri, Sat 6am-4pm (10h)  0.05 PTO/day  skills: logic 3, programming 4
+   3. ML Engineer I                      $   28/hr  Mon, Tue, Wed, Thu, Fri, Sat 7am-4pm (9h)  0.08 PTO/day  skills: logic 4, programming 5
+   4. Model Trainer                      $   40/hr  Mon, Tue, Wed, Thu, Fri 8am-5pm (9h)  0.10 PTO/day  skills: logic 5, programming 6, robotics 3
+   5. Senior ML Engineer                 $   60/hr  Mon, Tue, Wed, Thu, Fri 8am-4pm (8h)  0.12 PTO/day  skills: logic 6, programming 7, robotics 4
+   6. Lead ML Architect                  $   90/hr  Mon, Tue, Wed, Thu, Fri 8am-4pm (8h)  0.15 PTO/day  skills: logic 7, programming 8, robotics 5
+
+Machine Learning Engineer Track  (branches from level 6)
+   7. Principal ML Scientist             $  150/hr  Mon, Tue, Wed, Thu, Fri 9am-5pm (8h)  0.20 PTO/day  skills: logic 8, programming 9, robotics 6
+   8. Distinguished AI Researcher        $  800/hr  Mon, Tue, Wed, Thu 10am-5pm (7h)  0.25 PTO/day  skills: logic 9, programming 10, robotics 7
+   9. Autonomous Systems Visionary       $ 6000/hr  Mon, Tue, Wed 10am-4pm (6h)  0.30 PTO/day  skills: logic 10, programming 10, robotics 8
+  10. World-Renowned Machine Learning Engineer $ 9000/hr  Mon, Thu 11am-3pm (4h)  0.35 PTO/day  skills: logic 10, programming 10, robotics 10
+
+Executive Leadership Track  (branches from level 6)
+   7. Corporate Algorithm Overseer       $  200/hr  Mon, Tue, Wed, Thu, Fri 9am-5pm (8h)  0.20 PTO/day  skills: charisma 5, entrepreneur 4, logic 7, programming 8
+   8. Director of Global AI Domination   $ 1500/hr  Mon, Tue, Wed, Thu 9am-4pm (7h)  0.25 PTO/day  skills: charisma 7, entrepreneur 6, logic 8, programming 9
+   9. Chief AI Overlord                  $ 7000/hr  Mon, Tue, Wed 10am-4pm (6h)  0.30 PTO/day  skills: charisma 9, entrepreneur 8, logic 9, programming 10
+  10. Chief Executive Officer, Supreme Overlord of Innovation $10000/hr  Mon, Wed, Fri 11am-5pm (6h)  0.40 PTO/day  skills: charisma 10, logic 10, programming 10, robotics 10
+
+----------------------------------------------------------------------
+FILES
+----------------------------------------------------------------------
+ml_engineer_ceo_path.package        67 resources, 38 strings
+ml_engineer_ceo_path.ts4script      diagnostic console command
+ml_engineer_ceo_path.spec.json      edit and rebuild to tweak
+ml_engineer_ceo_path.manifest.json  every resource id, for conflict checks
+
+----------------------------------------------------------------------
+INSTALL
+----------------------------------------------------------------------
+1. Copy the .package AND the .ts4script into your Mods folder:
+     Windows  Documents\Electronic Arts\The Sims 4\Mods
+     macOS    ~/Documents/Electronic Arts/The Sims 4/Mods
+   They can sit in a subfolder, but no deeper than one level down.
+
+2. In game: Game Options > Other > enable BOTH
+     'Enable Custom Content and Mods'
+     'Script Mods Allowed'
+   Then restart the game fully. Script mods only load at startup.
+
+3. Delete localthumbcache.package from the The Sims 4 folder. Stale
+   cache is the single most common reason a new mod does not appear.
+
+----------------------------------------------------------------------
+VERIFYING IT WORKED
+----------------------------------------------------------------------
+Open the console with Ctrl+Shift+C and run:
+     forge.ml_engineer_ceo_path
+
+  Command responds     -> script loaded. If the career is still
+                          missing, the .package tuning did not
+                          resolve; see TROUBLESHOOTING below.
+  Unknown command      -> the .ts4script is not loading. Check that
+                          script mods are enabled and the file is
+                          not nested too deep.
+
+Then have an adult sim use a phone or computer > Find a Job.
+The career appears as 'Machine Learning Engineer'.
+
+----------------------------------------------------------------------
+TROUBLESHOOTING
+----------------------------------------------------------------------
+The tuning and SimData follow EA's own careers as of game version
+1.127.41.1030, and only reference base-game content. A
+later patch can still rename fields. If the career misbehaves,
+check the game's exception log, which names the tuning file and
+field at fault:
+  Documents/Electronic Arts/The Sims 4/lastException*.txt
+
+----------------------------------------------------------------------
+NOTES
+----------------------------------------------------------------------
+  - Custom icon art is not available (no OpenRouter key, so no custom art); the career uses EA's own keyword-picked icons.
+  - Executive Leadership Track level 8 (Director of Global AI Domination): entrepreneur 6 is enforced as entrepreneur 4, the nearest level with an objective.
+  - Executive Leadership Track level 9 (Chief AI Overlord): entrepreneur 8 is enforced as entrepreneur 4, the nearest level with an objective.
+  - This mod references pack content (Discover University (EP08), High School Years (EP12)). Players without those packs will get a broken promotion gate; share it with that caveat.
+

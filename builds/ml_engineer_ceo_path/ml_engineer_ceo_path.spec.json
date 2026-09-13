@@ -1,0 +1,333 @@
+{
+  "name": "Machine Learning Engineer",
+  "description": "Grind through brutal data-labeling all-nighters to become an AI genius who eventually works two days a week for a fortune — or claw your way to the very top of the company and start making decisions the rest of Sulani will regret.",
+  "branches": [
+    {
+      "name": "Foundations in Machine Learning",
+      "description": "The unglamorous, exhausting climb every AI genius has to survive before the money starts rolling in.",
+      "branches_at": null,
+      "levels": [
+        {
+          "level": 1,
+          "title": "Data Labeling Intern",
+          "pay_per_hour": 15,
+          "description": "You spend brutally long days clicking checkboxes to teach a computer what a cat looks like.",
+          "required_skills": {
+            "logic": 2,
+            "programming": 3
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday"
+          ],
+          "start_hour": 6,
+          "hours_per_day": 10,
+          "promotion_message": "You've been hired! Welcome to the bottom of the machine learning food chain.",
+          "pto_per_day": 0.0
+        },
+        {
+          "level": 2,
+          "title": "Junior Data Wrangler",
+          "pay_per_hour": 20,
+          "description": "You clean messy datasets until your eyes bleed, all for the promise of a better title someday.",
+          "required_skills": {
+            "logic": 3,
+            "programming": 4
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday"
+          ],
+          "start_hour": 6,
+          "hours_per_day": 10,
+          "promotion_message": "Your code finally stopped crashing. You're a Junior Data Wrangler now.",
+          "pto_per_day": 0.05
+        },
+        {
+          "level": 3,
+          "title": "ML Engineer I",
+          "pay_per_hour": 28,
+          "description": "You build your first real models while surviving on energy drinks and stubbornness.",
+          "required_skills": {
+            "logic": 4,
+            "programming": 5
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday"
+          ],
+          "start_hour": 7,
+          "hours_per_day": 9,
+          "promotion_message": "You've earned the title ML Engineer I. The grind is paying off, slowly.",
+          "pto_per_day": 0.08
+        },
+        {
+          "level": 4,
+          "title": "Model Trainer",
+          "pay_per_hour": 40,
+          "description": "You train neural networks that occasionally do exactly what you want, which feels like magic.",
+          "required_skills": {
+            "logic": 5,
+            "programming": 6,
+            "robotics": 3
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday"
+          ],
+          "start_hour": 8,
+          "hours_per_day": 9,
+          "promotion_message": "Your models are finally converging. You're a Model Trainer now.",
+          "pto_per_day": 0.1
+        },
+        {
+          "level": 5,
+          "title": "Senior ML Engineer",
+          "pay_per_hour": 60,
+          "description": "You lead small projects and mentor interns who remind you painfully of yourself two years ago.",
+          "required_skills": {
+            "logic": 6,
+            "programming": 7,
+            "robotics": 4
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday"
+          ],
+          "start_hour": 8,
+          "hours_per_day": 8,
+          "promotion_message": "Senior ML Engineer! You're finally sleeping more than five hours a night.",
+          "pto_per_day": 0.12
+        },
+        {
+          "level": 6,
+          "title": "Lead ML Architect",
+          "pay_per_hour": 90,
+          "description": "You design entire systems from scratch, and executives are starting to notice your name.",
+          "required_skills": {
+            "logic": 7,
+            "programming": 8,
+            "robotics": 5
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday"
+          ],
+          "start_hour": 8,
+          "hours_per_day": 8,
+          "promotion_message": "You're now Lead ML Architect. Two very different paths lie ahead of you now.",
+          "pto_per_day": 0.15
+        }
+      ]
+    },
+    {
+      "name": "Machine Learning Engineer Track",
+      "description": "Keep building the algorithms yourself, becoming a legend whose genius eventually buys total freedom.",
+      "branches_at": 6,
+      "levels": [
+        {
+          "level": 7,
+          "title": "Principal ML Scientist",
+          "pay_per_hour": 150,
+          "description": "You publish research that makes rival companies panic and recruiters slide into your inbox.",
+          "required_skills": {
+            "logic": 8,
+            "programming": 9,
+            "robotics": 6
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday"
+          ],
+          "start_hour": 9,
+          "hours_per_day": 8,
+          "promotion_message": "Principal ML Scientist! The industry actually reads your papers now.",
+          "pto_per_day": 0.2
+        },
+        {
+          "level": 8,
+          "title": "Distinguished AI Researcher",
+          "pay_per_hour": 800,
+          "description": "You architect breakthrough systems that quietly reshape the tech world while you work shorter weeks.",
+          "required_skills": {
+            "logic": 9,
+            "programming": 10,
+            "robotics": 7
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday"
+          ],
+          "start_hour": 10,
+          "hours_per_day": 7,
+          "promotion_message": "You're a Distinguished AI Researcher now, and the paychecks are getting absurd.",
+          "pto_per_day": 0.25
+        },
+        {
+          "level": 9,
+          "title": "Autonomous Systems Visionary",
+          "pay_per_hour": 6000,
+          "description": "Your algorithms run themselves, and so, increasingly, does your calendar.",
+          "required_skills": {
+            "logic": 10,
+            "programming": 10,
+            "robotics": 8
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday"
+          ],
+          "start_hour": 10,
+          "hours_per_day": 6,
+          "promotion_message": "Visionary status achieved. You barely need to show up, and yet the money keeps flowing.",
+          "pto_per_day": 0.3
+        },
+        {
+          "level": 10,
+          "title": "World-Renowned Machine Learning Engineer",
+          "pay_per_hour": 9000,
+          "description": "You show up two days a week, tweak a model or two, and casually make more before lunch than most Sims see in a lifetime.",
+          "required_skills": {
+            "logic": 10,
+            "programming": 10,
+            "robotics": 10
+          },
+          "work_days": [
+            "monday",
+            "thursday"
+          ],
+          "start_hour": 11,
+          "hours_per_day": 4,
+          "promotion_message": "You are now a world-renowned ML Engineer. Take all the time off you want — you've earned every bit of it.",
+          "pto_per_day": 0.35
+        }
+      ]
+    },
+    {
+      "name": "Executive Leadership Track",
+      "description": "Stop building the algorithms and start owning the company that profits from them — ethics optional.",
+      "branches_at": 6,
+      "levels": [
+        {
+          "level": 7,
+          "title": "Corporate Algorithm Overseer",
+          "pay_per_hour": 200,
+          "description": "You stop coding and start deciding which models get deployed on an unsuspecting public.",
+          "required_skills": {
+            "charisma": 5,
+            "entrepreneur": 4,
+            "logic": 7,
+            "programming": 8
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday"
+          ],
+          "start_hour": 9,
+          "hours_per_day": 8,
+          "promotion_message": "You're now a Corporate Algorithm Overseer. Somewhere, an ethics board just got quieter.",
+          "pto_per_day": 0.2
+        },
+        {
+          "level": 8,
+          "title": "Director of Global AI Domination",
+          "pay_per_hour": 1500,
+          "description": "You expand the company's reach into markets that definitely didn't ask for this much AI.",
+          "required_skills": {
+            "charisma": 7,
+            "entrepreneur": 6,
+            "logic": 8,
+            "programming": 9
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday"
+          ],
+          "start_hour": 9,
+          "hours_per_day": 7,
+          "promotion_message": "Director of Global AI Domination! Your business cards are printed in a slightly menacing font now.",
+          "pto_per_day": 0.25
+        },
+        {
+          "level": 9,
+          "title": "Chief AI Overlord",
+          "pay_per_hour": 7000,
+          "description": "You sit at the head of a boardroom table, nodding along to plans you only half understand and fully approve of.",
+          "required_skills": {
+            "charisma": 9,
+            "entrepreneur": 8,
+            "logic": 9,
+            "programming": 10
+          },
+          "work_days": [
+            "monday",
+            "tuesday",
+            "wednesday"
+          ],
+          "start_hour": 10,
+          "hours_per_day": 6,
+          "promotion_message": "Chief AI Overlord. You now have a personal elevator and questionable amounts of power.",
+          "pto_per_day": 0.3
+        },
+        {
+          "level": 10,
+          "title": "Chief Executive Officer, Supreme Overlord of Innovation",
+          "pay_per_hour": 10000,
+          "description": "You work three short days a week signing off on things you probably shouldn't, and the money is obscene.",
+          "required_skills": {
+            "charisma": 10,
+            "logic": 10,
+            "programming": 10,
+            "robotics": 10
+          },
+          "work_days": [
+            "monday",
+            "wednesday",
+            "friday"
+          ],
+          "start_hour": 11,
+          "hours_per_day": 6,
+          "promotion_message": "You are now CEO. Take all the time off you want — the empire runs itself, whether or not that's a good thing.",
+          "pto_per_day": 0.4
+        }
+      ]
+    }
+  ],
+  "author": "CareerForge",
+  "mod_key": "ml_engineer_ceo_path",
+  "icon_hint": "a glowing neural network circuit forming a dollar sign",
+  "company_name": "Nexalytics AI Corp",
+  "icon_mode": "custom"
+}

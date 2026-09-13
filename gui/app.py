@@ -30,6 +30,18 @@ EXAMPLES = [
 ]
 
 
+def _fmt_hour(hour: int) -> str:
+    hour %= 24
+    label = hour % 12 or 12
+    return f"{label}{'am' if hour < 12 else 'pm'}"
+
+
+def _schedule_text(level) -> str:
+    days = "/".join(d[:3] for d in level.work_days)
+    return (f"{days} {_fmt_hour(level.start_hour)}-"
+            f"{_fmt_hour(level.start_hour + level.hours_per_day)}")
+
+
 class ForgeApp:
     def __init__(self) -> None:
         self.settings = Settings.load()
@@ -124,7 +136,7 @@ class ForgeApp:
                 for lvl in sorted(branch.levels, key=lambda l: l.level):
                     self.log(
                         f"    {lvl.level:>2}. {lvl.title}  "
-                        f"${lvl.pay_per_hour}/hr", "info"
+                        f"${lvl.pay_per_hour}/hr  {_schedule_text(lvl)}", "info"
                     )
             self.log("", "info")
             self.log("Review it, then press Build Mod.", "good")
@@ -153,6 +165,8 @@ class ForgeApp:
             result = build_career(
                 self.current_spec, out,
                 on_progress=lambda m: self.log(m, "info"),
+                api_key=self.settings.resolved_api_key,
+                image_model=self.settings.image_model,
             )
             self.last_build = result
             self.log("", "info")

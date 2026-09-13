@@ -138,6 +138,57 @@ details>div{padding-top:calc(var(--sp)*2);display:flex;flex-direction:column;gap
   font-family:"IBM Plex Mono",monospace;
 }
 .chip.none{border-style:dashed;color:var(--chalk-dim);border-color:var(--rule)}
+.chip.flavor{
+  border-style:dashed;opacity:.65;
+  cursor:help;
+}
+
+/* ---------- schedule strip ---------- */
+.rung-sched{
+  display:flex;gap:12px;align-items:center;margin-top:7px;flex-wrap:wrap;
+  font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--chalk-dim);
+}
+.days{display:flex;gap:2px}
+.day{width:18px;text-align:center;border-radius:2px;padding:1px 0;opacity:.35}
+.day.on{opacity:1;color:var(--brass);background:rgba(242,183,5,.13);font-weight:600}
+.rung-sched .shift{color:var(--line);white-space:nowrap}
+.rung-sched .pto{white-space:nowrap}
+.rung.changed{animation:flash 1.8s ease}
+@keyframes flash{0%{background:rgba(242,183,5,.16)}100%{background:transparent}}
+
+/* ---------- track icons ---------- */
+.track-head{align-items:center}
+.track-icon{width:36px;height:36px;border-radius:3px;flex:none;background:rgba(111,168,199,.08)}
+
+/* ---------- refine chat ---------- */
+.refine{
+  border:1px solid var(--rule);border-radius:4px;
+  background:rgba(13,30,47,.5);padding:calc(var(--sp)*2.5);
+  margin-top:calc(var(--sp)*3);
+}
+.refine h3{margin:0 0 10px;font-size:15px;font-weight:600}
+.chat{display:flex;flex-direction:column;gap:8px;max-height:280px;overflow:auto;margin-bottom:10px}
+.msg{max-width:85%;padding:8px 11px;border-radius:4px;font-size:13.5px;line-height:1.45}
+.msg.user{align-self:flex-end;background:rgba(242,183,5,.12);border:1px solid rgba(242,183,5,.35)}
+.msg.assistant{align-self:flex-start;background:var(--ground-deep);border:1px solid var(--rule);color:var(--chalk-dim)}
+.chat-empty{color:var(--chalk-dim);font-size:13px;padding:2px 0}
+.refine .row{display:flex;gap:8px}
+.refine input{flex:1;min-width:0}
+
+/* ---------- checkbox ---------- */
+.check{display:flex;align-items:flex-start;gap:8px;font-size:13px;font-weight:400;cursor:pointer;margin-bottom:0}
+.check input{margin-top:3px;accent-color:var(--brass)}
+
+/* ---------- game content panel ---------- */
+.pack-row{
+  display:flex;align-items:flex-start;gap:8px;padding:8px 10px;
+  border:1px solid var(--rule);border-radius:3px;background:var(--ground-deep);
+}
+.pack-row .check{flex:1}
+.pack-row .check span{font-weight:600}
+.pack-row .check small{display:block;color:var(--chalk-dim);font-weight:400;font-size:12px;margin-top:2px}
+.pack-list{display:flex;flex-direction:column;gap:8px;max-height:300px;overflow:auto;padding-right:4px}
+.scan-note{font-size:12.5px;color:var(--chalk-dim)}
 .rung-pay{
   font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--brass);
   white-space:nowrap;font-weight:500;text-align:right;
@@ -201,6 +252,16 @@ details>div{padding-top:calc(var(--sp)*2);display:flex;flex-direction:column;gap
       <button class="btn btn-primary" id="draft">Draft career</button>
     </div>
 
+    <div>
+      <label class="check">
+        <input type="checkbox" id="custom-icons">
+        Custom AI icons
+      </label>
+      <div class="hint">Generates icon art styled after EA's own career icons
+        — one image per branch, billed by OpenRouter and cached so rebuilds
+        don't re-bill. Off = the closest matching EA icon.</div>
+    </div>
+
     <details id="model-panel">
       <summary>Model</summary>
       <div>
@@ -217,6 +278,12 @@ details>div{padding-top:calc(var(--sp)*2);display:flex;flex-direction:column;gap
           <label for="model">Model</label>
           <select id="model"></select>
           <button class="btn" id="fetch-models" style="margin-top:8px">Load model list</button>
+        </div>
+        <div>
+          <label for="imagemodel">Icon image model</label>
+          <select id="imagemodel"></select>
+          <div class="hint">Used for custom icons when that box is ticked.
+            Only models that accept reference images style-match EA well.</div>
         </div>
         <div>
           <label for="temp">Inventiveness <span class="mono" id="temp-val">0.8</span></label>
@@ -246,6 +313,23 @@ details>div{padding-top:calc(var(--sp)*2);display:flex;flex-direction:column;gap
         </div>
       </div>
     </details>
+
+    <details id="content-panel">
+      <summary>Game content</summary>
+      <div>
+        <div id="packs-area">
+          <div class="hint">Scan your Sims 4 install so promotion gates can
+            use pack skills (robotics, entrepreneur, …). Takes ~20 seconds,
+            cached afterwards.</div>
+          <button class="btn" id="scan-btn" style="margin-top:8px">Scan game</button>
+        </div>
+        <div>
+          <label for="gamedir">Sims 4 install folder</label>
+          <input type="text" id="gamedir" placeholder="auto-detected">
+          <div class="hint">Only needed if auto-detection fails.</div>
+        </div>
+      </div>
+    </details>
   </aside>
 
   <!-- ============ right: the stage ============ -->
@@ -254,8 +338,9 @@ details>div{padding-top:calc(var(--sp)*2);display:flex;flex-direction:column;gap
       <div class="empty">
         <strong>No career yet</strong>
         Describe a job on the left and press Draft career. You will see the
-        full ladder here — every level, what it pays, and which skills gate
-        the promotion — before anything is written to disk.
+        full ladder here — every level, what it pays, which skills gate the
+        promotion, and when your sim works — before anything is written to
+        disk. Then keep chatting to refine it.
       </div>
     </div>
 
@@ -281,6 +366,31 @@ details>div{padding-top:calc(var(--sp)*2);display:flex;flex-direction:column;gap
 <script>
 const $ = id => document.getElementById(id);
 let SPEC = null, EXAMPLES = [], exIndex = 0, POLL = null;
+let CURRENT = null;        // {sessionId, icons, chat}
+let PREV_LEVELS = {};      // "branch:level" -> JSON, for change highlighting
+let PACK_SKILLS = {};      // skill -> pack name, from enabled packs
+
+const DAY_NAMES = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];
+const DAY_INITIALS = ["S","M","T","W","T","F","S"];
+// Skills EA ships base-game promotion objectives for (matches ea_refs.py).
+const BASE_ENFORCED = ["mixology","charisma","comedy","fishing","fitness","gardening",
+  "gourmet_cooking","handiness","cooking","logic","mischief","painting","photography",
+  "piano","programming","rocket_science","video_gaming","writing"];
+// EA's own vacation pacing; used when a level doesn't set pto_per_day.
+const EA_PTO = [0.2,0.2125,0.225,0.2375,0.25,0.2667,0.2833,0.3,0.3167,0.3333];
+
+const esc = s => String(s ?? "").replace(/[&<>"]/g,
+  c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function fmtHour(h){
+  h = ((h % 24) + 24) % 24;
+  const hr = h % 12 || 12;
+  return `${hr} ${h < 12 ? "AM" : "PM"}`;
+}
+function effectivePto(lvl){
+  if (lvl.pto_per_day != null) return lvl.pto_per_day;
+  return EA_PTO[Math.min(Math.max(lvl.level || 1, 1), 10) - 1];
+}
 
 function log(message, level = "info"){
   const box = $("log");
@@ -299,17 +409,85 @@ function busy(on){
     : "Draft career";
   const build = $("build-btn");
   if (build) build.disabled = on;
+  const send = $("refine-send");
+  if (send) send.disabled = on;
+  const input = $("refine-input");
+  if (input) input.disabled = on;
 }
 
 // ---------- rendering the ladder ----------
-function renderCareer(spec){
+
+function scheduleStrip(lvl){
+  const worked = new Set((lvl.work_days || []).map(d => String(d).toLowerCase()));
+  const start = lvl.start_hour ?? 9;
+  const hours = lvl.hours_per_day ?? 8;
+  const days = DAY_INITIALS.map((d, i) =>
+    `<span class="day${worked.has(DAY_NAMES[i]) ? " on" : ""}" title="${DAY_NAMES[i]}">${d}</span>`
+  ).join("");
+  return `
+    <div class="rung-sched">
+      <span class="days" title="Work days">${days}</span>
+      <span class="shift">${fmtHour(start)} – ${fmtHour(start + hours)}</span>
+      <span>${hours}h/day</span>
+      <span class="pto" title="Paid vacation accrued per work day">${effectivePto(lvl).toFixed(2)} PTO/day</span>
+    </div>`;
+}
+
+function refinePanel(){
+  return `
+    <div class="refine" id="refine-panel">
+      <h3>Refine this career</h3>
+      <div class="chat" id="chat"></div>
+      <div class="row">
+        <input type="text" id="refine-input"
+               placeholder="e.g. make level 4 a night shift and raise the top pay">
+        <button class="btn btn-primary" id="refine-send">Send</button>
+      </div>
+    </div>`;
+}
+
+function chipClass(skill, level){
+  if (BASE_ENFORCED.includes(skill)) return "";  // solid, enforced
+  if (PACK_SKILLS[skill]) return "flavor";       // pack skill, enforced if pack on
+  return "flavor";                               // no objective anywhere
+}
+
+function chipTitle(skill, level){
+  if (BASE_ENFORCED.includes(skill)){
+    // base-game skill, but the needed level may exceed EA's highest objective
+    return `${skill} ${level} — promotion gate`;
+  }
+  if (PACK_SKILLS[skill]){
+    return `${skill} ${level} — enforced via ${PACK_SKILLS[skill]}`;
+  }
+  return `${skill} ${level} — flavour only; no promotion objective exists, so this gate relies on work performance`;
+}
+
+function renderChat(){
+  const chat = $("chat");
+  if (!chat) return;
+  const history = (CURRENT && CURRENT.chat) || [];
+  chat.innerHTML = history.length
+    ? history.map(m => `<div class="msg ${esc(m.role)}">${esc(m.text)}</div>`).join("")
+    : `<div class="chat-empty">Tell the model what to change. It keeps the
+         whole conversation, so you can refine step by step and the ladder
+         updates here after every change.</div>`;
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function renderCareer(spec, ctx){
+  ctx = ctx || {};
+  CURRENT = {
+    sessionId: ctx.sessionId || (CURRENT && CURRENT.sessionId) || "",
+    icons: ctx.icons || {},
+    chat: ctx.chat || (CURRENT ? CURRENT.chat : []),
+  };
   SPEC = spec;
+  const icons = CURRENT.icons;
   const area = $("career-area");
   const levels = spec.branches.flatMap(b => b.levels);
   const topPay = Math.max(...levels.map(l => l.pay_per_hour), 1);
-
-  const esc = s => String(s ?? "").replace(/[&<>"]/g,
-    c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  const nextPrev = {};
 
   const tracks = spec.branches.map(branch => {
     const origin = branch.branches_at == null
@@ -319,15 +497,22 @@ function renderCareer(spec){
     const rungs = [...branch.levels].sort((a,b) => a.level - b.level).map(lvl => {
       const skills = Object.entries(lvl.required_skills || {});
       const chips = skills.length
-        ? skills.map(([s,v]) => `<span class="chip">${esc(s)} ${v}</span>`).join("")
+        ? skills.map(([s,v]) =>
+            `<span class="chip ${chipClass(s, v)}" title="${esc(chipTitle(s, v))}">${esc(s)} ${v}</span>`
+          ).join("")
         : '<span class="chip none">no skill gate</span>';
       const width = Math.max(3, Math.round((lvl.pay_per_hour / topPay) * 100));
+      const key = `${branch.key}:${lvl.level}`;
+      const snapshot = JSON.stringify(lvl);
+      nextPrev[key] = snapshot;
+      const changed = PREV_LEVELS[key] !== undefined && PREV_LEVELS[key] !== snapshot;
       return `
-        <div class="rung">
+        <div class="rung${changed ? " changed" : ""}">
           <div class="rung-n">${lvl.level}</div>
           <div class="rung-body">
             <div class="rung-title">${esc(lvl.title)}</div>
             ${lvl.description ? `<div class="rung-desc">${esc(lvl.description)}</div>` : ""}
+            ${scheduleStrip(lvl)}
             <div class="rung-skills">${chips}</div>
           </div>
           <div class="rung-gauge" title="${lvl.pay_per_hour} per hour">
@@ -337,14 +522,20 @@ function renderCareer(spec){
         </div>`;
     }).join("");
 
+    const icon = icons[branch.key]
+      ? `<img class="track-icon" src="${icons[branch.key]}" alt="${esc(branch.name)} icon">`
+      : "";
     return `
       <section class="track">
         <div class="track-head">
+          ${icon}
           <h3>${esc(branch.name)}</h3><span>${origin}</span>
         </div>
         ${rungs}
       </section>`;
   }).join("");
+
+  PREV_LEVELS = nextPrev;
 
   area.innerHTML = `
     <div class="career-head">
@@ -353,6 +544,7 @@ function renderCareer(spec){
     </div>
     <p class="career-desc">${esc(spec.description)}</p>
     ${tracks}
+    ${refinePanel()}
     <div class="row" style="margin-top:20px">
       <button class="btn btn-primary" id="build-btn">Build mod</button>
       <button class="btn" id="redraft">Draft another</button>
@@ -360,6 +552,11 @@ function renderCareer(spec){
 
   $("build-btn").onclick = startBuild;
   $("redraft").onclick = () => $("draft").click();
+  $("refine-send").onclick = startRefine;
+  $("refine-input").addEventListener("keydown", e => {
+    if (e.key === "Enter" && !e.shiftKey){ e.preventDefault(); startRefine(); }
+  });
+  renderChat();
 }
 
 function renderBuild(info){
@@ -412,13 +609,47 @@ async function startDraft(){
   const idea = $("idea").value.trim();
   if (!idea) return log("Describe a career first.", "warn");
   clearLog(); busy(true);
+  CURRENT = null;
+  PREV_LEVELS = {};
   const res = await post("/api/generate", {
     idea, model:$("model").value,
+    icon_mode: $("custom-icons").checked ? "custom" : "ea",
     temperature: parseFloat($("temp").value),
     max_attempts: parseInt($("attempts").value, 10)
   });
   if (res.error){ busy(false); return log(res.error, "error"); }
-  pollJob(res.job_id, job => { if (job.spec) renderCareer(job.spec); });
+  pollJob(res.job_id, job => {
+    if (job.spec){
+      renderCareer(job.spec, {icons: job.icons, sessionId: job.session_id, chat: []});
+      if (job.session_id) localStorage.setItem("cf_session", job.session_id);
+    }
+  });
+}
+
+async function startRefine(){
+  const input = $("refine-input");
+  const instruction = input.value.trim();
+  if (!instruction) return;
+  if (!CURRENT || !CURRENT.sessionId)
+    return log("No session to refine. Draft a career first.", "warn");
+  if (!SPEC) return;
+  clearLog(); busy(true);
+  const res = await post("/api/refine", {
+    session_id: CURRENT.sessionId, instruction,
+    model: $("model").value,
+    temperature: parseFloat($("temp").value),
+    max_attempts: parseInt($("attempts").value, 10)
+  });
+  if (res.error){ busy(false); return log(res.error, "error"); }
+  input.value = "";
+  pollJob(res.job_id, job => {
+    if (job.spec){
+      CURRENT.chat.push({role: "user", text: instruction});
+      CURRENT.chat.push({role: "assistant", text: job.summary || "Career updated."});
+      renderCareer(job.spec, {icons: job.icons, sessionId: job.session_id});
+      if (job.session_id) localStorage.setItem("cf_session", job.session_id);
+    }
+  });
 }
 
 async function startBuild(){
@@ -437,19 +668,78 @@ async function saveSettings(){
     max_attempts: parseInt($("attempts").value, 10),
     output_dir: $("outdir").value,
     mods_dir: $("modsdir").value,
+    game_dir: $("gamedir").value.trim(),
+    image_model: $("imagemodel").value,
     api_key: $("apikey").value || undefined
   });
 }
+
+// ---------- game content ----------
+async function loadPacks(){
+  const res = await (await fetch("/api/game-content")).json().catch(() => null);
+  if (!res) return;
+  const area = $("packs-area");
+  if (!res.scanned){
+    PACK_SKILLS = {};
+    return;  // just the scan button + hint already in the HTML
+  }
+  const rows = res.packs.map(p => `
+    <div class="pack-row">
+      <label class="check">
+        <input type="checkbox" class="pack-check" data-code="${esc(p.code)}"
+               ${p.enabled ? "checked" : ""}>
+        <span>${esc(p.name)}</span>
+        <small>${esc(p.code)} — ${esc(p.skills.join(", "))}</small>
+      </label>
+    </div>`).join("");
+  area.innerHTML = `
+    <div class="scan-note">Scanned ${res.scanned_utc ? res.scanned_utc.replace("T", " ").replace("Z", " UTC") : ""}
+      ${res.game_version ? "· game " + esc(res.game_version) : ""}</div>
+    <div class="pack-list" style="margin-top:8px">${rows}</div>
+    <button class="btn" id="rescan-btn" style="margin-top:8px">Rescan</button>`;
+  $("rescan-btn").onclick = scanGame;
+  area.querySelectorAll(".pack-check").forEach(box =>
+    box.addEventListener("change", savePacks));
+  savePacks();  // populate PACK_SKILLS for chip rendering
+}
+
+async function savePacks(){
+  const codes = [...document.querySelectorAll(".pack-check:checked")]
+    .map(b => b.dataset.code);
+  const res = await post("/api/game-content/packs", {enabled_packs: codes});
+  if (res.error) return log(res.error, "error");
+  if (res.scanned){
+    PACK_SKILLS = {};
+    res.packs.filter(p => p.enabled).forEach(p =>
+      p.skills.forEach(s => { PACK_SKILLS[s] = p.name; }));
+    if (SPEC) renderCareer(SPEC);  // chips may change meaning
+  }
+}
+
+async function scanGame(){
+  const btn = $("scan-btn") || $("rescan-btn");
+  if (btn){ btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>Scanning…'; }
+  const res = await post("/api/game-content/scan", {});
+  if (res.error){
+    if (btn){ btn.disabled = false; btn.textContent = "Scan game"; }
+    return log(res.error, "error");
+  }
+  pollJob(res.job_id, () => { loadPacks(); });
+}
+
 
 async function init(){
   const s = await (await fetch("/api/settings")).json();
   EXAMPLES = s.examples || [];
   $("model").innerHTML = (s.models || []).map(m =>
     `<option ${m === s.model ? "selected" : ""}>${m}</option>`).join("");
+  $("imagemodel").innerHTML = (s.image_models || []).map(m =>
+    `<option ${m === s.image_model ? "selected" : ""}>${m}</option>`).join("");
   $("temp").value = s.temperature; $("temp-val").textContent = s.temperature;
   $("attempts").value = s.max_attempts; $("attempts-val").textContent = s.max_attempts;
   $("outdir").value = s.output_dir;
   $("modsdir").value = s.mods_dir;
+  $("gamedir").value = s.game_dir || "";
 
   const ks = $("keystate");
   if (s.has_key){
@@ -459,6 +749,24 @@ async function init(){
     ks.className = "keystate missing";
     ks.textContent = "No key yet. Add one below or in a .env file.";
     $("model-panel").open = true;
+  }
+
+  await loadPacks();
+  $("scan-btn").onclick = scanGame;
+
+  // Restore the last refinement session, if the server still holds it.
+  const sid = localStorage.getItem("cf_session");
+  if (sid){
+    try {
+      const sess = await (await fetch(`/api/session/${sid}`)).json();
+      if (sess && sess.spec){
+        PREV_LEVELS = {};
+        renderCareer(sess.spec, {icons: sess.icons, sessionId: sid, chat: sess.chat});
+        log("Restored your last drafted career.", "good");
+      } else {
+        localStorage.removeItem("cf_session");
+      }
+    } catch (e) { /* server unreachable; nothing to restore */ }
   }
 }
 
@@ -477,7 +785,7 @@ $("fetch-models").onclick = async () => {
   $("model").innerHTML = res.models.map(m => `<option>${m}</option>`).join("");
   log(`Loaded ${res.models.length} models.`, "good");
 };
-["model","outdir","modsdir","apikey","temp","attempts"].forEach(id =>
+["model","imagemodel","outdir","modsdir","gamedir","apikey","temp","attempts"].forEach(id =>
   $(id).addEventListener("change", saveSettings));
 $("idea").addEventListener("keydown", e => {
   if ((e.metaKey || e.ctrlKey) && e.key === "Enter") startDraft();

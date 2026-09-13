@@ -1,3 +1,5 @@
 flask>=3.0
+# Custom career icon art: decode/resize/trim images and pack DDS icons.
+pillow>=10.0
 # Optional: only needed for the desktop window (python main.py --gui)
 # dearpygui>=1.11,<3

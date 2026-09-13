@@ -166,21 +166,29 @@ def build_performance_stat(alloc: InstanceAllocator) -> GeneratedResource:
 
 def build_aspiration(level: CareerLevel, branch: CareerBranch,
                      alloc: InstanceAllocator,
-                     notes: list[str]) -> GeneratedResource | None:
-    """The skill objectives a Sim must meet to be promoted out of `level`."""
+                     notes: list[str],
+                     skill_objectives: dict[str, dict[int, int]] | None = None,
+                     ) -> GeneratedResource | None:
+    """
+    The skill objectives a Sim must meet to be promoted out of `level`.
+
+    `skill_objectives` is the merged base-game + enabled-packs table; when
+    omitted, base game only (the hardcoded ea_refs table).
+    """
+    table = skill_objectives or ea_refs.SKILL_OBJECTIVES
     objectives: list[int] = []
     for skill, needed in sorted(level.required_skills.items()):
-        found = ea_refs.skill_objective(skill, int(needed))
+        found = _objective_lookup(table, skill, int(needed))
         where = f"{branch.name} level {level.level} ({level.title})"
         if found is None:
-            notes.append(f"{where}: {skill} {needed} is not enforced; the base "
-                         f"game has no {skill} objective at or below level {needed}.")
+            notes.append(f"{where}: {skill} {needed} is not enforced; no "
+                         f"promotion objective is available for {skill} at "
+                         f"or below level {needed}.")
             continue
         objective, actual = found
         if actual != int(needed):
             notes.append(f"{where}: {skill} {needed} is enforced as {skill} "
-                         f"{actual}, the nearest level the base game has an "
-                         f"objective for.")
+                         f"{actual}, the nearest level with an objective.")
         objectives.append(objective)
     if not objectives:
         return None
@@ -192,6 +200,17 @@ def build_aspiration(level: CareerLevel, branch: CareerBranch,
     _ref_list(root, "objectives", objectives)
     return GeneratedResource("aspiration", res_name, _pretty(root),
                              aspiration_simdata(name, objectives))
+
+
+def _objective_lookup(table: dict[str, dict[int, int]], skill: str,
+                      level: int) -> tuple[int, int] | None:
+    """(objective id, level it checks) for a skill requirement, or None."""
+    levels = table.get(skill.lower(), {})
+    usable = [lvl for lvl in levels if lvl <= level]
+    if not usable:
+        return None
+    best = max(usable)
+    return levels[best], best
 
 
 # ---------------------------------------------------------------------------
@@ -211,7 +230,8 @@ def build_level_tuning(level: CareerLevel, branch: CareerBranch, user_level: int
     desc_key = strings.add(alloc.string_key(f"{res_name}_desc"),
                            level.description or level.title)
     pacing_level = min(max(user_level, 1), 10)
-    pto = ea_refs.PTO_PER_DAY[pacing_level]
+    pto = (level.pto_per_day if level.pto_per_day is not None
+           else ea_refs.PTO_PER_DAY[pacing_level])
 
     root = _tuning_root("CareerLevel", "career_level", "careers.career_tuning",
                         name, instance)
@@ -272,8 +292,16 @@ def build_level_tuning(level: CareerLevel, branch: CareerBranch, user_level: int
 def build_track_tuning(branch: CareerBranch, spec: CareerSpec,
                        alloc: InstanceAllocator, strings: StringTable,
                        level_ids: list[int],
-                       branch_ids: list[int]) -> GeneratedResource:
-    """Build one CareerTrack. The base track carries the career's name."""
+                       branch_ids: list[int],
+                       icon_override: tuple[int, int] | None = None
+                       ) -> GeneratedResource:
+    """
+    Build one CareerTrack. The base track carries the career's name.
+
+    `icon_override` is (picker, panel) instance ids for this branch's own
+    custom icon art; without it the track points at one of EA's icons picked
+    by keyword.
+    """
     res_name = f"career_track_{branch.key}"
     name = alloc.tuning_name(res_name)
     is_base = branch.branches_at is None
@@ -285,7 +313,8 @@ def build_track_tuning(branch: CareerBranch, spec: CareerSpec,
     # the game logs an error otherwise.
     neutral_key = strings.add(alloc.string_key(f"{res_name}_name_neutral"), shown_name)
     desc_key = strings.add(alloc.string_key(f"{res_name}_desc"), description)
-    icon, icon_high_res = ea_refs.pick_icon(spec.name, spec.icon_hint, branch.name)
+    icon, icon_high_res = (icon_override
+                           or ea_refs.pick_icon(spec.name, spec.icon_hint, branch.name))
 
     root = _tuning_root("TunableCareerTrack", "career_track", "careers.career_tuning",
                         name, alloc.instance(res_name))
@@ -358,9 +387,20 @@ def build_career_tuning(spec: CareerSpec, alloc: InstanceAllocator,
 # ---------------------------------------------------------------------------
 
 def build_all_tuning(spec: CareerSpec, alloc: InstanceAllocator,
-                     strings: StringTable) -> CareerResources:
-    """Build every resource for a career, tuning and SimData together."""
+                     strings: StringTable,
+                     icon_overrides: dict[str, tuple[int, int]] | None = None,
+                     skill_objectives: dict[str, dict[int, int]] | None = None,
+                     ) -> CareerResources:
+    """
+    Build every resource for a career, tuning and SimData together.
+
+    `icon_overrides` maps branch key -> (picker, panel) instance ids of
+    custom icon art; branches without an entry use EA's keyword-picked icons.
+    `skill_objectives` is the merged base-game + enabled-packs objective
+    table; omitted means base game only.
+    """
     out = CareerResources()
+    overrides = icon_overrides or {}
     stat = build_performance_stat(alloc)
     out.resources.append(stat)
     performance_stat = alloc.instance(stat.name)
@@ -373,7 +413,8 @@ def build_all_tuning(spec: CareerSpec, alloc: InstanceAllocator,
         first_user_level = 1 if branch.branches_at is None else base_levels + 1
         level_ids: list[int] = []
         for index, level in enumerate(sorted(branch.levels, key=lambda l: l.level)):
-            aspiration = build_aspiration(level, branch, alloc, out.notes)
+            aspiration = build_aspiration(level, branch, alloc, out.notes,
+                                          skill_objectives=skill_objectives)
             if aspiration is not None:
                 out.resources.append(aspiration)
             generated = build_level_tuning(
@@ -387,7 +428,8 @@ def build_all_tuning(spec: CareerSpec, alloc: InstanceAllocator,
         branch_ids = ([alloc.instance(f"career_track_{c.key}") for c in children]
                       if branch is base else [])
         out.resources.append(build_track_tuning(
-            branch, spec, alloc, strings, level_ids, branch_ids))
+            branch, spec, alloc, strings, level_ids, branch_ids,
+            icon_override=overrides.get(branch.key)))
 
     start_track = alloc.instance(f"career_track_{base.key}")
     out.resources.append(build_career_tuning(spec, alloc, strings, start_track))
