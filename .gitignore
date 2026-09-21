@@ -1,4 +1,37 @@
+# Local secrets and machine-specific configuration
 .env
+.env.*
+!.env.example
+.envrc
+.direnv/
+*.key
+*.pem
+*.p12
+*.pfx
+.claude/settings.local.json
+.idea/
+.vscode/
+
+# Python environments and generated files
 .venv/
+venv/
+env/
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Packaging and generated mod output
+build/
+dist/
+builds/
+
+# OS metadata
+.DS_Store
+Thumbs.db
+Desktop.ini

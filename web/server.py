@@ -26,7 +26,7 @@ from flask import Flask, jsonify, request, send_file, render_template
 
 from forge.builder import build_career, BuildError
 from forge.config import Settings, default_mods_folder
-from forge.llm import OpenRouterClient, generate_career, LLMError
+from forge.llm import OpenRouterClient, generate_career, revise_career, LLMError
 from forge.schema import CareerSpec, SpecError
 
 EXAMPLES = [
@@ -204,6 +204,60 @@ def create_app() -> Flask:
                     f"Drafted {result.spec.name} in "
                     f"{result.attempts} attempt(s).", "good"
                 )
+                job.status = "done"
+            except (LLMError, SpecError) as exc:
+                job.error = str(exc)
+                job.add(str(exc), "error")
+                job.status = "error"
+            except Exception:
+                job.error = traceback.format_exc()
+                job.add("Unexpected failure. See the server console.", "error")
+                job.status = "error"
+
+        threading.Thread(target=work, daemon=True).start()
+        return jsonify({"job_id": job.id})
+
+    # -- revise -------------------------------------------------------------
+
+    @app.post("/api/revise")
+    def start_revise():
+        data = request.get_json(silent=True) or {}
+        raw_spec = data.get("spec")
+        instruction = str(data.get("instruction", "")).strip()
+        if not raw_spec:
+            return jsonify({"error": "Nothing to revise yet."}), 400
+        if not instruction:
+            return jsonify({"error": "Describe the change you want."}), 400
+        if not settings.resolved_api_key:
+            return jsonify({
+                "error": "No OpenRouter key. Put OPENROUTER_API_KEY in a .env "
+                         "file next to main.py, or paste one under Model."
+            }), 400
+
+        try:
+            spec = CareerSpec.from_dict(raw_spec)
+        except SpecError as exc:
+            return jsonify({"error": str(exc)}), 400
+
+        model = str(data.get("model") or settings.model).strip()
+        try:
+            temperature = float(data.get("temperature", settings.temperature))
+            attempts = int(data.get("max_attempts", settings.max_attempts))
+        except (TypeError, ValueError):
+            return jsonify({"error": "Temperature and attempts must be numbers."}), 400
+
+        job = new_job("revise")
+
+        def work() -> None:
+            try:
+                client = OpenRouterClient(settings.resolved_api_key)
+                result = revise_career(
+                    client, spec, instruction, model,
+                    max_attempts=attempts, temperature=temperature,
+                    on_progress=lambda m: job.add(m),
+                )
+                job.spec = result.spec.to_dict()
+                job.add(f"Updated {result.spec.name}.", "good")
                 job.status = "done"
             except (LLMError, SpecError) as exc:
                 job.error = str(exc)

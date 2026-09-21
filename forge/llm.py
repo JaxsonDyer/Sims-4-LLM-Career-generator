@@ -16,34 +16,69 @@ import urllib.error
 import urllib.request
 from dataclasses import dataclass
 
-from .schema import CareerSpec, SpecError, JSON_SCHEMA_HINT, KNOWN_SKILLS
+from .schema import (
+    CareerSpec, SpecError, JSON_SCHEMA_HINT, KNOWN_SKILLS, MAX_PAY_PER_HOUR,
+)
 
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 MODELS_URL = "https://openrouter.ai/api/v1/models"
 
-SYSTEM_PROMPT = f"""You design careers for The Sims 4. You output JSON only.
-
-Given a player's idea, produce a complete, balanced career track.
-
-Rules you must follow:
+RULES = f"""Rules you must follow:
 - Output a single JSON object. No prose, no markdown fences, no commentary.
 - Exactly one branch must have "branches_at": null. That is the base track.
 - If the career branches, add 1 or 2 more branches with "branches_at" set to
   the base track's LAST level number; careers only split after the base
   track ends. Branch levels continue numbering from there.
 - Level numbers within a branch must be consecutive with no gaps.
-- Pay must increase with level. Entry level is typically 12-25/hour, top of a
-  10-level career is typically 300-800/hour. Scale smoothly between.
+- Pay must increase with level, unless the player explicitly asks for a
+  different arc (e.g. a punishing grind that only pays off at the top).
+  If the player gives NO pay guidance, default to entry level 12-25/hour and
+  a 10-level top of 300-800/hour, scaled smoothly between. If the player DOES
+  give pay figures - a target number, "$X a day", "$X a week", a described
+  curve like "meager at first, huge at the end" - hit those numbers as
+  closely as the schema allows instead of the typical range above, even when
+  they land far outside it. Convert any daily or weekly figure to
+  pay_per_hour yourself using that level's own hours_per_day and work_days
+  count. pay_per_hour must stay under {MAX_PAY_PER_HOUR} - if the player's
+  request divides out to more than that, get as close as you can under the
+  cap by adjusting hours_per_day/work_days first, then note the shortfall is
+  unavoidable rather than silently reverting to a modest, "safe" number.
+- work_days and hours_per_day may differ level to level to match a described
+  lifestyle arc - e.g. every day of the week and long hours at the bottom of
+  a grind, then very few work_days once the player describes reaching the
+  top and having free time.
 - required_skills may only use these skill names:
 {", ".join(sorted(KNOWN_SKILLS))}
-- Skill levels are 1-10. Early career levels should need few or no skills.
+- Skill levels are 1-10. Early career levels should need few or no skills;
+  a career the player describes as hard to break into can demand several
+  high-level skills even at level 1.
 - work_days uses lowercase weekday names. start_hour is 0-23. hours_per_day
   is 1-12.
 - Titles are short and flavourful. Descriptions are one sentence.
-- promotion_message is written in second person, addressed to the player.
+- promotion_message is written in second person, addressed to the player."""
+
+SYSTEM_PROMPT = f"""You design careers for The Sims 4. You output JSON only.
+
+Given a player's idea, produce a complete, balanced career track.
+
+{RULES}
 
 Match the tone of the player's idea. If they ask for something comedic, be
 comedic. If they ask for something grounded, stay grounded.
+
+Schema:
+{JSON_SCHEMA_HINT}"""
+
+REVISE_SYSTEM_PROMPT = f"""You revise an existing Sims 4 career specification to
+match a player's requested change. You output JSON only.
+
+You will be given the current career as JSON and an instruction describing
+what the player wants changed. Apply that change and return the COMPLETE
+updated career as a single JSON object, in the same schema. Leave everything
+the player did not ask to change as close to the original as you reasonably
+can - do not regenerate the career from scratch over one small request.
+
+{RULES}
 
 Schema:
 {JSON_SCHEMA_HINT}"""
@@ -228,5 +263,68 @@ def generate_career(client: OpenRouterClient, idea: str, model: str,
 
     raise LLMError(
         f"{model} could not produce a valid career in {max_attempts} attempts. "
+        f"Last problems:\n{last_error}"
+    )
+
+
+def revise_career(client: OpenRouterClient, spec: CareerSpec, instruction: str,
+                  model: str, max_attempts: int = 3, temperature: float = 0.7,
+                  on_progress=None) -> GenerationResult:
+    """
+    Apply a free-text change to an already-drafted CareerSpec.
+
+    Same validate-and-repair loop as generate_career, except the model starts
+    from the existing spec instead of a blank idea, so a small ask ("make the
+    top level pay more") does not need a full redraft to fix.
+    """
+    def report(message: str) -> None:
+        if on_progress:
+            on_progress(message)
+
+    if not instruction.strip():
+        raise LLMError("no change requested")
+
+    messages = [
+        {"role": "system", "content": REVISE_SYSTEM_PROMPT},
+        {"role": "user", "content": (
+            f"Current career JSON:\n{spec.to_json()}\n\n"
+            f"Requested change: {instruction.strip()}\n\n"
+            "Return the complete updated career as a single JSON object."
+        )},
+    ]
+
+    last_error = ""
+    raw = ""
+    for attempt in range(1, max_attempts + 1):
+        report(f"Asking {model} to revise (attempt {attempt}/{max_attempts})...")
+        raw = client.chat(model, messages, temperature=temperature)
+
+        try:
+            revised = CareerSpec.from_json(_extract_json(raw))
+            problems = revised.validate()
+        except SpecError as exc:
+            problems = [str(exc)]
+            revised = None
+
+        if revised is not None and not problems:
+            report("Revision applied.")
+            return GenerationResult(
+                spec=revised, model=model, attempts=attempt, raw_response=raw
+            )
+
+        last_error = "\n".join(f"- {p}" for p in problems)
+        report(f"Revised spec had {len(problems)} problem(s); asking for a fix.")
+
+        messages.append({"role": "assistant", "content": raw})
+        messages.append({
+            "role": "user",
+            "content": (
+                "That revision failed validation. Fix these problems and "
+                "return the corrected JSON object only:\n\n" + last_error
+            ),
+        })
+
+    raise LLMError(
+        f"{model} could not produce a valid revision in {max_attempts} attempts. "
         f"Last problems:\n{last_error}"
     )

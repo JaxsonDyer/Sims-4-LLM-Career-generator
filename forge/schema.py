@@ -32,6 +32,10 @@ KNOWN_SKILLS = {
 
 MAX_LEVELS = 10
 MAX_BRANCHES = 3
+# A guard against a model typo (e.g. an extra digit), not an economic limit -
+# Simoleons aren't real money, so a player asking for a top-tier career
+# paying hundreds of thousands a day is legitimate and must fit under this.
+MAX_PAY_PER_HOUR = 2_000_000
 
 
 class SpecError(ValueError):
@@ -73,10 +77,10 @@ class CareerLevel:
             problems.append(f"{where}: title is over 60 characters")
         if self.pay_per_hour < 1:
             problems.append(f"{where}: pay must be at least 1/hour")
-        if self.pay_per_hour > 10000:
+        if self.pay_per_hour > MAX_PAY_PER_HOUR:
             problems.append(
                 f"{where}: pay of {self.pay_per_hour}/hour is absurd; "
-                f"cap is 10000"
+                f"cap is {MAX_PAY_PER_HOUR}"
             )
         if not 0 <= self.start_hour <= 23:
             problems.append(f"{where}: start_hour must be 0-23")

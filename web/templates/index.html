@@ -115,7 +115,7 @@ details>div{padding-top:calc(var(--sp)*2);display:flex;flex-direction:column;gap
 
 /* rungs ascend visually: pay drives bar length */
 .rung{
-  display:grid;grid-template-columns:26px 1fr 116px 78px;gap:14px;align-items:center;
+  display:grid;grid-template-columns:26px 1fr 116px 94px;gap:14px;align-items:center;
   padding:9px 0;border-bottom:1px solid rgba(44,76,107,.45);
 }
 @media (max-width:700px){
@@ -139,10 +139,24 @@ details>div{padding-top:calc(var(--sp)*2);display:flex;flex-direction:column;gap
 }
 .chip.none{border-style:dashed;color:var(--chalk-dim);border-color:var(--rule)}
 .rung-pay{
-  font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--brass);
-  white-space:nowrap;font-weight:500;text-align:right;
+  font-family:"IBM Plex Mono",monospace;white-space:nowrap;text-align:right;
+  display:flex;flex-direction:column;gap:2px;
 }
+.rung-pay-wk{color:var(--brass);font-size:13px;font-weight:600}
+.rung-pay-hr{color:var(--chalk-dim);font-size:11px;font-weight:400}
 .rung-desc{font-size:12.5px;color:var(--chalk-dim);margin-top:3px;max-width:62ch}
+.rung-schedule{display:flex;align-items:center;gap:10px;margin-top:7px;flex-wrap:wrap}
+.day-grid{display:inline-flex;gap:3px}
+.day-box{
+  width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;
+  font-size:8.5px;font-weight:600;border-radius:2px;
+  border:1px solid var(--rule);color:var(--chalk-dim);background:transparent;
+  font-family:"IBM Plex Mono",monospace;
+}
+.day-box.on{background:var(--brass);border-color:var(--brass-deep);color:#231A00}
+.rung-hours{
+  font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--chalk-dim);
+}
 
 /* ---------- activity ---------- */
 .log{
@@ -159,6 +173,20 @@ details>div{padding-top:calc(var(--sp)*2);display:flex;flex-direction:column;gap
 .result{border:1px solid rgba(127,176,105,.45);border-radius:4px;padding:calc(var(--sp)*2.5);background:rgba(127,176,105,.06)}
 .result h3{margin:0 0 8px;font-size:16px;font-weight:600}
 .result p{margin:0 0 10px;color:var(--chalk-dim);font-size:13.5px}
+
+/* ---------- refine chat ---------- */
+.chat{border-top:1px solid var(--rule);margin-top:calc(var(--sp)*3);padding-top:calc(var(--sp)*3)}
+.chat h4{margin:0 0 4px;font-size:14px;font-weight:600}
+.chat-hint{font-size:12.5px;color:var(--chalk-dim);margin:0 0 calc(var(--sp)*2)}
+.chat-log{display:flex;flex-direction:column;gap:8px;margin-bottom:calc(var(--sp)*2)}
+.chat-log:not(:empty){max-height:280px;overflow:auto;padding-right:2px}
+.chat-msg{padding:8px 12px;border-radius:5px;font-size:13.5px;line-height:1.45;max-width:85%;white-space:pre-wrap}
+.chat-msg.user{align-self:flex-end;background:rgba(111,168,199,.16);border:1px solid rgba(111,168,199,.35)}
+.chat-msg.assistant{align-self:flex-start;background:var(--ground-deep);border:1px solid var(--rule);color:var(--chalk-dim)}
+.chat-msg.assistant.error{border-color:rgba(224,108,90,.5);color:var(--rust)}
+.chat-row{display:flex;gap:calc(var(--sp)*1.5)}
+.chat-row input{flex:1}
+.chat-row .btn{flex:none;min-width:88px}
 
 .banner{
   border-left:3px solid var(--brass);background:rgba(242,183,5,.07);
@@ -301,12 +329,65 @@ function busy(on){
   if (build) build.disabled = on;
 }
 
+// ---------- schedule / pay formatting ----------
+const DAY_ORDER = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];
+const DAY_ABBR = {sunday:"Sun",monday:"Mon",tuesday:"Tue",wednesday:"Wed",
+  thursday:"Thu",friday:"Fri",saturday:"Sat"};
+const DAY_LETTER = {sunday:"Su",monday:"M",tuesday:"Tu",wednesday:"W",
+  thursday:"Th",friday:"F",saturday:"Sa"};
+
+function formatDays(days){
+  const idx = [...new Set((days || []).map(d => String(d).toLowerCase()))]
+    .filter(d => DAY_ORDER.includes(d))
+    .map(d => DAY_ORDER.indexOf(d))
+    .sort((a, b) => a - b);
+  if (!idx.length) return "no fixed days";
+
+  const groups = [];
+  let start = idx[0], prev = idx[0];
+  for (const cur of idx.slice(1)){
+    if (cur === prev + 1){ prev = cur; continue; }
+    groups.push([start, prev]);
+    start = prev = cur;
+  }
+  groups.push([start, prev]);
+
+  return groups.map(([a, b]) => {
+    if (a === b) return DAY_ABBR[DAY_ORDER[a]];
+    if (b - a >= 2) return `${DAY_ABBR[DAY_ORDER[a]]}–${DAY_ABBR[DAY_ORDER[b]]}`;
+    return `${DAY_ABBR[DAY_ORDER[a]]}, ${DAY_ABBR[DAY_ORDER[b]]}`;
+  }).join(", ");
+}
+
+function formatHour(h){
+  h = ((Math.round(h) % 24) + 24) % 24;
+  const period = h < 12 ? "am" : "pm";
+  const hour12 = h % 12 === 0 ? 12 : h % 12;
+  return `${hour12}${period}`;
+}
+
+function scheduleHTML(lvl){
+  const worked = new Set((lvl.work_days || []).map(d => String(d).toLowerCase()));
+  const boxes = DAY_ORDER.map(d =>
+    `<span class="day-box${worked.has(d) ? " on" : ""}" title="${DAY_ABBR[d]}">${DAY_LETTER[d]}</span>`
+  ).join("");
+  const end = (lvl.start_hour || 0) + (lvl.hours_per_day || 0);
+  return `
+    <div class="rung-schedule" title="${formatDays(lvl.work_days)}">
+      <span class="day-grid">${boxes}</span>
+      <span class="rung-hours">${formatHour(lvl.start_hour)}–${formatHour(end)}</span>
+    </div>`;
+}
+
+function weeklyPay(lvl){
+  return Math.round((lvl.pay_per_hour || 0) * (lvl.hours_per_day || 0)
+    * (lvl.work_days || []).length);
+}
+
 // ---------- rendering the ladder ----------
-function renderCareer(spec){
-  SPEC = spec;
-  const area = $("career-area");
+function ladderHTML(spec){
   const levels = spec.branches.flatMap(b => b.levels);
-  const topPay = Math.max(...levels.map(l => l.pay_per_hour), 1);
+  const topWeekly = Math.max(...levels.map(weeklyPay), 1);
 
   const esc = s => String(s ?? "").replace(/[&<>"]/g,
     c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -321,19 +402,24 @@ function renderCareer(spec){
       const chips = skills.length
         ? skills.map(([s,v]) => `<span class="chip">${esc(s)} ${v}</span>`).join("")
         : '<span class="chip none">no skill gate</span>';
-      const width = Math.max(3, Math.round((lvl.pay_per_hour / topPay) * 100));
+      const weekly = weeklyPay(lvl);
+      const width = Math.max(3, Math.round((weekly / topWeekly) * 100));
       return `
         <div class="rung">
           <div class="rung-n">${lvl.level}</div>
           <div class="rung-body">
             <div class="rung-title">${esc(lvl.title)}</div>
             ${lvl.description ? `<div class="rung-desc">${esc(lvl.description)}</div>` : ""}
+            ${scheduleHTML(lvl)}
             <div class="rung-skills">${chips}</div>
           </div>
-          <div class="rung-gauge" title="${lvl.pay_per_hour} per hour">
+          <div class="rung-gauge" title="§${weekly.toLocaleString()} per week">
             <span class="rung-bar" style="width:${width}%"></span>
           </div>
-          <div class="rung-pay">§${lvl.pay_per_hour}/hr</div>
+          <div class="rung-pay">
+            <div class="rung-pay-wk">§${weekly.toLocaleString()}/wk</div>
+            <div class="rung-pay-hr">§${lvl.pay_per_hour.toLocaleString()}/hr</div>
+          </div>
         </div>`;
     }).join("");
 
@@ -346,7 +432,7 @@ function renderCareer(spec){
       </section>`;
   }).join("");
 
-  area.innerHTML = `
+  return `
     <div class="career-head">
       <h2>${esc(spec.name)}</h2>
       <span class="key mono">${esc(spec.mod_key)}</span>
@@ -357,9 +443,79 @@ function renderCareer(spec){
       <button class="btn btn-primary" id="build-btn">Build mod</button>
       <button class="btn" id="redraft">Draft another</button>
     </div>`;
+}
 
+function wireLadderButtons(){
   $("build-btn").onclick = startBuild;
   $("redraft").onclick = () => $("draft").click();
+}
+
+// ---------- rendering the career area (ladder + refine chat) ----------
+function renderCareer(spec){
+  SPEC = spec;
+  const area = $("career-area");
+  area.innerHTML = `
+    <div id="career-ladder"></div>
+    <div class="chat">
+      <h4>Not happy with something?</h4>
+      <p class="chat-hint">Tell it what to change — "make the top level pay
+        more", "rename the second track", "give level 3 a logic requirement" —
+        and it edits this career in place instead of drafting a new one.</p>
+      <div class="chat-log" id="chat-log"></div>
+      <div class="row chat-row">
+        <input type="text" id="chat-input" placeholder="Describe the change…">
+        <button class="btn" id="chat-send">Send</button>
+      </div>
+    </div>`;
+  $("career-ladder").innerHTML = ladderHTML(spec);
+  wireLadderButtons();
+
+  $("chat-send").onclick = sendRevision;
+  $("chat-input").addEventListener("keydown", e => {
+    if (e.key === "Enter") sendRevision();
+  });
+}
+
+function chatMsg(text, cls){
+  const el = document.createElement("div");
+  el.className = `chat-msg ${cls}`;
+  el.textContent = text;
+  const box = $("chat-log");
+  box.appendChild(el);
+  box.scrollTop = box.scrollHeight;
+}
+
+function setChatBusy(on){
+  $("chat-send").disabled = on;
+  $("chat-input").disabled = on;
+  $("chat-send").textContent = on ? "Applying…" : "Send";
+}
+
+async function sendRevision(){
+  const input = $("chat-input");
+  const instruction = input.value.trim();
+  if (!instruction || !SPEC) return;
+
+  chatMsg(instruction, "user");
+  input.value = "";
+  setChatBusy(true);
+
+  const res = await post("/api/revise", {
+    spec: SPEC, instruction,
+    model: $("model").value,
+    temperature: parseFloat($("temp").value),
+    max_attempts: parseInt($("attempts").value, 10)
+  });
+  if (res.error){ setChatBusy(false); chatMsg(res.error, "assistant error"); return; }
+
+  pollJob(res.job_id, job => {
+    if (job.spec){
+      SPEC = job.spec;
+      $("career-ladder").innerHTML = ladderHTML(SPEC);
+      wireLadderButtons();
+      chatMsg("Done — updated above.", "assistant");
+    }
+  }, { busy: setChatBusy, onError: msg => chatMsg(msg || "Could not apply that change.", "assistant error") });
 }
 
 function renderBuild(info){
@@ -393,17 +549,22 @@ async function post(url, body){
   return res.json().catch(() => ({error:"Server sent something unreadable."}));
 }
 
-function pollJob(jobId, onDone){
+function pollJob(jobId, onDone, { busy: busyFn = busy, onError } = {}){
   let seen = 0;
   clearInterval(POLL);
   POLL = setInterval(async () => {
     const job = await (await fetch(`/api/job/${jobId}`)).json();
-    if (job.error && !job.log) { clearInterval(POLL); busy(false); return log(job.error,"error"); }
+    if (job.error && !job.log) {
+      clearInterval(POLL); busyFn(false);
+      if (onError) onError(job.error);
+      return log(job.error,"error");
+    }
     (job.log || []).slice(seen).forEach(l => log(l.message, l.level));
     seen = (job.log || []).length;
     if (job.status !== "running"){
-      clearInterval(POLL); busy(false);
+      clearInterval(POLL); busyFn(false);
       if (job.status === "done") onDone(job);
+      else if (job.status === "error" && onError) onError(job.error);
     }
   }, 400);
 }
